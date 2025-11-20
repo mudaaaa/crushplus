@@ -63,14 +63,6 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
-	// Add gold +
-	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
-	if len(lines) > 0 {
-		goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
-		lines[len(lines)-1] += goldPlus
-		crush = strings.Join(lines, "\n")
-	}
-
 	// Charm and version.
 	metaRowGap := 1
 	maxVersionWidth := crushWidth - lipgloss.Width(charm) - metaRowGap
@@ -198,24 +190,42 @@ func letterH(stretch bool) string {
 	//
 	// █   █
 	// █▀▀▀█
-	// ▀   ▀
+	// ▀ + ▀
 
 	side := heredoc.Doc(`
 		█
 		█
 		▀`)
-	middle := heredoc.Doc(`
+	
+	// Build the middle part with the + in the bottom section
+	middleTop := heredoc.Doc(`
 
 		▀
 	`)
+	
+	middlePart := stretchLetterformPart(middleTop, letterformProps{
+		stretch:    stretch,
+		width:      3,
+		minStretch: 8,
+		maxStretch: 12,
+	})
+	
+	// Insert the gold + in the middle of the bottom line
+	lines := strings.Split(middlePart, "\n")
+	if len(lines) >= 3 {
+		bottomLine := lines[2]
+		// Find the middle position
+		midPos := len(bottomLine) / 2
+		if midPos > 0 {
+			goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
+			lines[2] = bottomLine[:midPos] + goldPlus + bottomLine[midPos+1:]
+		}
+		middlePart = strings.Join(lines, "\n")
+	}
+	
 	return joinLetterform(
 		side,
-		stretchLetterformPart(middle, letterformProps{
-			stretch:    stretch,
-			width:      3,
-			minStretch: 8,
-			maxStretch: 12,
-		}),
+		middlePart,
 		side,
 	)
 }
