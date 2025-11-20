@@ -63,43 +63,6 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
-	// Add gold + by replacing the first space on the bottom line
-	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
-	if len(lines) >= 3 {
-		bottomLine := lines[2]
-		goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
-		
-		// Find and replace the first space character
-		result := ""
-		inEscape := false
-		replaced := false
-		
-		for i := 0; i < len(bottomLine); i++ {
-			ch := bottomLine[i]
-			
-			if ch == '\x1b' {
-				inEscape = true
-				result += string(ch)
-			} else if inEscape {
-				result += string(ch)
-				if ch == 'm' {
-					inEscape = false
-				}
-			} else if !replaced && ch == ' ' {
-				// Replace first space with gold +
-				result += goldPlus
-				replaced = true
-			} else {
-				result += string(ch)
-			}
-		}
-		
-		if replaced {
-			lines[2] = result
-		}
-		crush = strings.Join(lines, "\n")
-	}
-
 	// Charm and version.
 	metaRowGap := 1
 	maxVersionWidth := crushWidth - lipgloss.Width(charm) - metaRowGap
@@ -197,12 +160,12 @@ func letterC(stretch bool) string {
 	//
 	// ▄▀▀▀▀
 	// █
-	//	▀▀▀▀
+	// +▀▀▀▀
 
 	left := heredoc.Doc(`
 		▄
 		█
-	`)
+		+`)
 	right := heredoc.Doc(`
 		▀
 
