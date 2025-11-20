@@ -61,8 +61,8 @@ type editorCmp struct {
 	deleteMode         bool
 	readyPlaceholder   string
 	workingPlaceholder string
-	placeholderFrame   int // Animation frame (0-3)
-	placeholderTimer   *time.Ticker // Timer for animation
+	placeholderFrame   int       // Animation frame (0-3)
+	lastAnimationTime  time.Time // Last animation update time
 
 	keyMap EditorKeyMap
 
@@ -505,17 +505,18 @@ func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
 	// Set placeholder based on agent state
 	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-		// Animate the ellipsis for working placeholders
+		// Smooth ellipsis animation (update every 500ms)
+		now := time.Now()
+		if now.Sub(m.lastAnimationTime) >= 500*time.Millisecond {
+			m.placeholderFrame = (m.placeholderFrame + 1) % 4
+			m.lastAnimationTime = now
+		}
 		baseText := strings.TrimSuffix(m.workingPlaceholder, "...")
-		dots := strings.Repeat(".", m.placeholderFrame%4)
+		dots := strings.Repeat(".", m.placeholderFrame)
 		m.textarea.Placeholder = baseText + dots
 	} else {
 		m.textarea.Placeholder = m.readyPlaceholder
-		// Stop animation timer if running
-		if m.placeholderTimer != nil {
-			m.placeholderTimer.Stop()
-			m.placeholderTimer = nil
-		}
+		m.placeholderFrame = 0
 	}
 	if m.app.Permissions.SkipRequests() {
 		m.textarea.Placeholder = "Yolo mode!"
