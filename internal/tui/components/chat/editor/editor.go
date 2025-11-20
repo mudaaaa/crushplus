@@ -61,7 +61,6 @@ type editorCmp struct {
 	deleteMode         bool
 	readyPlaceholder   string
 	workingPlaceholder string
-	shimmerOffset      int     // For animating placeholder dots
 
 	keyMap EditorKeyMap
 
@@ -94,8 +93,6 @@ const (
 type OpenEditorMsg struct {
 	Text string
 }
-
-type shimmerTickMsg struct{}
 
 
 func (m *editorCmp) openEditor(value string) tea.Cmd {
@@ -140,13 +137,7 @@ func (m *editorCmp) openEditor(value string) tea.Cmd {
 }
 
 func (m *editorCmp) Init() tea.Cmd {
-	return m.shimmerTick()
-}
-
-func (m *editorCmp) shimmerTick() tea.Cmd {
-	return tea.Tick(time.Millisecond*300, func(time.Time) tea.Msg {
-		return shimmerTickMsg{}
-	})
+	return nil
 }
 
 func (m *editorCmp) send() tea.Cmd {
@@ -187,18 +178,6 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	var cmds []tea.Cmd
 	switch msg := msg.(type) {
-	case shimmerTickMsg:
-		// Update dot animation for placeholder
-		m.shimmerOffset++
-		if m.shimmerOffset > 3 {
-			m.shimmerOffset = 0
-		}
-		// Update the placeholder to trigger a re-render
-		if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-			// No need to set placeholder anymore since we render it manually
-			// The shimmer tick will trigger re-renders automatically
-		}
-		return m, m.shimmerTick()
 	case tea.WindowSizeMsg:
 		return m, m.repositionCompletions
 	case filepicker.FilePickedMsg:
@@ -514,49 +493,27 @@ func (m *editorCmp) randomizePlaceholders() {
 	m.readyPlaceholder = readyPlaceholders[rand.Intn(len(readyPlaceholders))]
 }
 
-// shimmerDots returns the animated dots for the working state.
-func (m *editorCmp) shimmerDots() string {
-	dots := []string{"", ".", "..", "..."}
-	return dots[m.shimmerOffset%len(dots)]
-}
-
-
-
 func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
 	// Set placeholder based on agent state
 	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-		// Don't set placeholder on textarea - we'll render it manually
-		m.textarea.Placeholder = ""
+		m.textarea.Placeholder = m.workingPlaceholder
 	} else {
 		m.textarea.Placeholder = m.readyPlaceholder
 	}
 	if m.app.Permissions.SkipRequests() {
 		m.textarea.Placeholder = "Yolo mode!"
 	}
-	
-	// Get the base textarea content
-	textareaContent := m.textarea.View()
-	
-	// If agent is busy and textarea is empty, manually render placeholder with animation
-	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() && m.textarea.Value() == "" {
-		// Create animated placeholder manually
-		placeholderText := m.workingPlaceholder + m.shimmerDots()
-		// Always render the placeholder when textarea is empty and agent is busy
-		placeholderStyle := lipgloss.NewStyle().Foreground(t.FgMuted)
-		textareaContent = placeholderStyle.Render(placeholderText) + "\n"
-	}
-	
 	if len(m.attachments) == 0 {
 		content := t.S().Base.Padding(1).Render(
-			textareaContent,
+			m.textarea.View(),
 		)
 		return content
 	}
 	content := t.S().Base.Padding(0, 1, 1, 1).Render(
 		lipgloss.JoinVertical(lipgloss.Top,
 			m.attachmentsContent(),
-			textareaContent,
+			m.textarea.View(),
 		),
 	)
 	return content
