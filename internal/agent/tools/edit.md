@@ -1,5 +1,8 @@
 Edits files by replacing text, creating new files, or deleting content. For moving/renaming use Bash 'mv'. For large edits use Write tool.
 
+⚠️ **CRITICAL: The Edit tool requires EXACT character-by-character matching.** 
+If your edit fails with "old_string not found", you did not copy the text exactly as it appears in the file. View the file again and copy-paste the text with ALL whitespace included.
+
 <prerequisites>
 1. Use View tool to understand file contents and context
 2. For new files: Use LS tool to verify parent directory exists
@@ -22,14 +25,17 @@ Edits files by replacing text, creating new files, or deleting content. For movi
 <critical_requirements>
 EXACT MATCHING: The tool is extremely literal. Text must match **EXACTLY**
 
-- Every space and tab character
-- Every blank line
-- Every newline character
-- Indentation level (count the spaces/tabs)
+**EVERY CHARACTER MATTERS:**
+- Every space and tab character (spaces ≠ tabs)
+- Every blank line (empty lines matter)
+- Every newline character (\n vs \r\n)
+- Indentation level (count the spaces/tabs - 2 spaces ≠ 4 spaces)
 - Comment spacing (`// comment` vs `//comment`)
 - Brace positioning (`func() {` vs `func(){`)
+- Trailing whitespace at end of lines
+- Invisible characters like zero-width spaces
 
-Common failures:
+**COMMON FAILURE EXAMPLES:**
 
 ```
 Expected: "    func foo() {"     (4 spaces)
@@ -40,7 +46,16 @@ Provided: "}\nfunc bar() {"      (1 newline) ❌ FAILS
 
 Expected: "// Comment"           (space after //)
 Provided: "//Comment"            (no space) ❌ FAILS
+
+Expected: "func() {"              (space before brace)
+Provided: "func(){"              (no space before brace) ❌ FAILS
 ```
+
+**COPY-PASTE IS MANDATORY:**
+- NEVER type the old_string by hand
+- ALWAYS copy directly from the View tool output
+- Include the line numbers in your selection when copying from View
+- The copied text must match exactly, including all invisible characters
 
 UNIQUENESS (when replace_all=false): old_string MUST uniquely identify target instance
 

@@ -1,5 +1,8 @@
 Makes multiple edits to a single file in one operation. Built on Edit tool for efficient multiple find-and-replace operations. Prefer over Edit tool for multiple edits to same file.
 
+⚠️ **CRITICAL: Multiedit requires EXACT character-by-character matching for EACH edit.** 
+If any edit fails with "old_string not found", you did not copy the text exactly as it appears in the file. View the file again and copy-paste the text with ALL whitespace included.
+
 <prerequisites>
 1. Use View tool to understand file contents and context
 2. Verify directory path is correct
