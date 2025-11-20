@@ -63,6 +63,14 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
+	// Add gold +
+	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
+	if len(lines) > 0 {
+		goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
+		lines[len(lines)-1] += goldPlus
+		crush = strings.Join(lines, "\n")
+	}
+
 	// Charm and version.
 	metaRowGap := 1
 	maxVersionWidth := crushWidth - lipgloss.Width(charm) - metaRowGap
