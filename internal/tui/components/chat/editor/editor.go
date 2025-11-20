@@ -195,9 +195,8 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 		}
 		// Update the placeholder to trigger a re-render
 		if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-			m.textarea.Placeholder = m.shimmerPlaceholder(m.workingPlaceholder)
-			// Force a re-render by triggering a no-op update
-			m.textarea, _ = m.textarea.Update(tea.KeyMsg{})
+			// No need to set placeholder anymore since we render it manually
+			// The shimmer tick will trigger re-renders automatically
 		}
 		return m, m.shimmerTick()
 	case tea.WindowSizeMsg:
@@ -545,7 +544,7 @@ func (m *editorCmp) View() string {
 		placeholderText := m.workingPlaceholder + m.shimmerDots()
 		// Replace the empty textarea content with our animated placeholder
 		if textareaContent == "\n" { // Empty textarea typically renders as just a newline
-			placeholderStyle := t.S().TextArea.Copy().Foreground(t.FgMuted)
+			placeholderStyle := lipgloss.NewStyle().Foreground(t.FgMuted)
 			textareaContent = placeholderStyle.Render(placeholderText) + "\n"
 		}
 	}
