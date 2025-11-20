@@ -63,70 +63,35 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
-	// Add gold + to the H letter by replacing a ▀ in the middle
+	// Add gold + at the bottom-left corner of the C
 	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
 	if len(lines) >= 3 {
-		// Find and replace the second-to-last ▀ with a gold +
 		bottomLine := lines[2]
+		goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
 		
-		// Count ▀ characters to find the right one to replace
-		count := strings.Count(ansi.Strip(bottomLine), "▀")
-		if count >= 2 {
-			// Replace the second-to-last ▀
-			goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
+		// Insert after the first visible character (the bottom-left of C)
+		// Find the first non-ANSI character
+		insertPos := 0
+		inEscape := false
+		foundFirst := false
+		
+		for i := 0; i < len(bottomLine); i++ {
+			ch := bottomLine[i]
 			
-			// Find all positions of ▀ in the stripped version
-			stripped := ansi.Strip(bottomLine)
-			targetIdx := -1
-			currentCount := 0
-			
-			for i, r := range stripped {
-				if r == '▀' {
-					currentCount++
-					if currentCount == count-1 { // second-to-last
-						targetIdx = i
-						break
-					}
-				}
+			if ch == '\x1b' {
+				inEscape = true
+			} else if inEscape && ch == 'm' {
+				inEscape = false
+			} else if !inEscape && !foundFirst {
+				// Found first visible character, insert after it
+				insertPos = i + 1
+				foundFirst = true
+				break
 			}
-			
-			if targetIdx >= 0 {
-				// Rebuild with the replacement at the visual position
-				result := ""
-				visualPos := 0
-				inEscape := false
-				replaced := false
-				
-				for i := 0; i < len(bottomLine); i++ {
-					ch := bottomLine[i]
-					
-					if ch == '\x1b' {
-						inEscape = true
-						result += string(ch)
-						continue
-					}
-					
-					if inEscape {
-						result += string(ch)
-						if ch == 'm' {
-							inEscape = false
-						}
-						continue
-					}
-					
-					if visualPos == targetIdx && !replaced {
-						result += goldPlus
-						replaced = true
-						visualPos++
-						continue
-					}
-					
-					result += string(ch)
-					visualPos++
-				}
-				
-				lines[2] = result
-			}
+		}
+		
+		if foundFirst && insertPos < len(bottomLine) {
+			lines[2] = bottomLine[:insertPos] + goldPlus + bottomLine[insertPos:]
 		}
 		crush = strings.Join(lines, "\n")
 	}
