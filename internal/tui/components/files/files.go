@@ -10,11 +10,11 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/x/ansi"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/history"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/history"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
 )
 
 // FileHistory represents a file history with initial and latest versions.
@@ -144,3 +144,4 @@ func RenderFileBlock(fileSlice []SessionFile, opts RenderOptions, showTruncation
 	}
 	return content
 }
+

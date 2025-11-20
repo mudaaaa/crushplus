@@ -16,11 +16,11 @@ import (
 	"strings"
 
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/env"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/log"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/env"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/home"
+	"github.com/mudaaaa/crushplus/internal/log"
 	powernapConfig "github.com/charmbracelet/x/powernap/pkg/config"
 )
 
@@ -718,3 +718,4 @@ func isInsideWorktree() bool {
 	).CombinedOutput()
 	return err == nil && strings.TrimSpace(string(bts)) == "true"
 }
+

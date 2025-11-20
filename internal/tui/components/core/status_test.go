@@ -5,7 +5,7 @@ import (
 	"image/color"
 	"testing"
 
-	"github.com/charmbracelet/crush/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
 	"github.com/charmbracelet/x/exp/golden"
 )
 
@@ -142,3 +142,4 @@ func TestStatusTruncation(t *testing.T) {
 		})
 	}
 }
+

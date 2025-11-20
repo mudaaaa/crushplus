@@ -14,9 +14,9 @@ import (
 	"time"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/shell"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/shell"
 )
 
 type BashParams struct {
@@ -437,3 +437,4 @@ func normalizeWorkingDir(path string) string {
 
 	return filepath.ToSlash(path)
 }
+

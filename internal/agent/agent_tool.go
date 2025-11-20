@@ -8,9 +8,9 @@ import (
 
 	"charm.land/fantasy"
 
-	"github.com/charmbracelet/crush/internal/agent/prompt"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/config"
+	"github.com/mudaaaa/crushplus/internal/agent/prompt"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/config"
 )
 
 //go:embed templates/agent_tool.md
@@ -103,3 +103,4 @@ func (c *coordinator) agentTool(ctx context.Context) (fantasy.AgentTool, error) 
 			return fantasy.NewTextResponse(result.Response.Content.Text()), nil
 		}), nil
 }
+

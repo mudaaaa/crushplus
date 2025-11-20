@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/charmbracelet/crush/internal/home"
+	"github.com/mudaaaa/crushplus/internal/home"
 )
 
 // Lookup searches for a target files or directories starting from dir
@@ -139,3 +139,4 @@ func probeEnt(fspath string, owner int) error {
 
 	return nil
 }
+

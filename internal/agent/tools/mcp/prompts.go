@@ -5,7 +5,7 @@ import (
 	"iter"
 	"log/slog"
 
-	"github.com/charmbracelet/crush/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/csync"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -85,3 +85,4 @@ func updatePrompts(mcpName string, prompts []*Prompt) {
 	}
 	allPrompts.Set(mcpName, prompts)
 }
+

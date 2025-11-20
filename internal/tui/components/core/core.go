@@ -8,8 +8,8 @@ import (
 	"charm.land/bubbles/v2/key"
 	"charm.land/lipgloss/v2"
 	"github.com/alecthomas/chroma/v2"
-	"github.com/charmbracelet/crush/internal/tui/exp/diffview"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/diffview"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
 	"github.com/charmbracelet/x/ansi"
 )
 
@@ -205,3 +205,4 @@ func DiffFormatter() *diffview.DiffView {
 	diff := formatDiff.ChromaStyle(style).Style(t.S().Diff).TabWidth(4)
 	return diff
 }
+

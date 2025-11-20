@@ -16,16 +16,16 @@ import (
 
 	"charm.land/fantasy"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/agent/prompt"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/history"
-	"github.com/charmbracelet/crush/internal/log"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/message"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/session"
+	"github.com/mudaaaa/crushplus/internal/agent/prompt"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/history"
+	"github.com/mudaaaa/crushplus/internal/log"
+	"github.com/mudaaaa/crushplus/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/message"
+	"github.com/mudaaaa/crushplus/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/session"
 	"golang.org/x/sync/errgroup"
 
 	"charm.land/fantasy/providers/anthropic"
@@ -765,3 +765,4 @@ func (c *coordinator) Summarize(ctx context.Context, sessionID string) error {
 	}
 	return c.currentAgent.Summarize(ctx, sessionID, getProviderOptions(c.currentAgent.Model(), providerCfg))
 }
+

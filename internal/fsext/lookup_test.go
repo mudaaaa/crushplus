@@ -6,7 +6,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/charmbracelet/crush/internal/home"
+	"github.com/mudaaaa/crushplus/internal/home"
 	"github.com/stretchr/testify/require"
 )
 
@@ -435,3 +435,4 @@ func TestProbeEnt(t *testing.T) {
 		require.True(t, errors.Is(err, os.ErrPermission))
 	})
 }
+

@@ -9,9 +9,9 @@ import (
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core/layout"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 	"github.com/sahilm/fuzzy"
 )
 
@@ -313,3 +313,4 @@ func (f *filterableGroupList[T]) SetInputPlaceholder(ph string) {
 	f.input.Placeholder = ph
 	f.placeholder = ph
 }
+

@@ -6,10 +6,10 @@ import (
 
 	"charm.land/lipgloss/v2"
 
-	"github.com/charmbracelet/crush/internal/agent/tools/mcp"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/agent/tools/mcp"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
 )
 
 // RenderOptions contains options for rendering MCP lists.
@@ -128,3 +128,4 @@ func RenderMCPBlock(opts RenderOptions, showTruncationIndicator bool) string {
 	}
 	return content
 }
+

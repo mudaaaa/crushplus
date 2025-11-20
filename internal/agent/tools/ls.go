@@ -10,10 +10,10 @@ import (
 	"strings"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/filepathext"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/filepathext"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 type LSParams struct {
@@ -238,3 +238,4 @@ func printNode(builder *strings.Builder, node *TreeNode, level int) {
 		}
 	}
 }
+

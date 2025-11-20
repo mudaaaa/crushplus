@@ -27,13 +27,13 @@ import (
 	"charm.land/fantasy/providers/openai"
 	"charm.land/fantasy/providers/openrouter"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/message"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/session"
-	"github.com/charmbracelet/crush/internal/stringext"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/message"
+	"github.com/mudaaaa/crushplus/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/session"
+	"github.com/mudaaaa/crushplus/internal/stringext"
 )
 
 //go:embed templates/title.md
@@ -882,3 +882,4 @@ func (a *sessionAgent) SetTools(tools []fantasy.AgentTool) {
 func (a *sessionAgent) Model() Model {
 	return a.largeModel
 }
+

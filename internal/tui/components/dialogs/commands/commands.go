@@ -12,17 +12,17 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
 
-	"github.com/charmbracelet/crush/internal/agent"
-	"github.com/charmbracelet/crush/internal/agent/tools/mcp"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/pubsub"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs"
-	"github.com/charmbracelet/crush/internal/tui/exp/list"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/agent"
+	"github.com/mudaaaa/crushplus/internal/agent/tools/mcp"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/pubsub"
+	"github.com/mudaaaa/crushplus/internal/tui/components/chat"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/list"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 const (
@@ -481,3 +481,4 @@ func (c *commandDialogCmp) defaultCommands() []Command {
 func (c *commandDialogCmp) ID() dialogs.DialogID {
 	return CommandsDialogID
 }
+

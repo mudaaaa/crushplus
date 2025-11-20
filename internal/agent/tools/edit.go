@@ -11,14 +11,14 @@ import (
 	"time"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/diff"
-	"github.com/charmbracelet/crush/internal/filepathext"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/history"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/diff"
+	"github.com/mudaaaa/crushplus/internal/filepathext"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/history"
 
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 type EditParams struct {
@@ -446,3 +446,4 @@ func replaceContent(edit editContext, filePath, oldString, newString string, rep
 			Removals:   removals,
 		}), nil
 }
+

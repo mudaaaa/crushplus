@@ -10,13 +10,13 @@ import (
 	"charm.land/bubbles/v2/viewport"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 	"github.com/charmbracelet/x/ansi"
 )
 
@@ -892,3 +892,4 @@ func (o Options) isSplitMode() *bool {
 
 	return &split
 }
+

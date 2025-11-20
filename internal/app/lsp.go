@@ -5,8 +5,8 @@ import (
 	"log/slog"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/lsp"
 )
 
 // initLSPClients initializes LSP clients.
@@ -78,3 +78,4 @@ func (app *App) createAndStartLSPClient(ctx context.Context, name string, config
 	// Add to map with mutex protection before starting goroutine
 	app.LSPClients.Set(name, lspClient)
 }
+

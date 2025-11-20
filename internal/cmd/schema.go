@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/charmbracelet/crush/internal/config"
+	"github.com/mudaaaa/crushplus/internal/config"
 	"github.com/invopop/jsonschema"
 	"github.com/spf13/cobra"
 )
@@ -24,3 +24,4 @@ var schemaCmd = &cobra.Command{
 		return nil
 	},
 }
+

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync/atomic"
 
-	"github.com/charmbracelet/crush/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/fsext"
 )
 
 const (
@@ -133,3 +133,4 @@ func HasInitialDataConfig() bool {
 	}
 	return Get().IsConfigured()
 }
+

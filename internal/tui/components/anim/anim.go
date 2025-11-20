@@ -15,8 +15,8 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/lucasb-eyer/go-colorful"
 
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 const (
@@ -445,3 +445,4 @@ func colorIsUnset(c color.Color) bool {
 	_, _, _, a := c.RGBA()
 	return a == 0
 }
+

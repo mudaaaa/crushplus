@@ -9,7 +9,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/event"
+	"github.com/mudaaaa/crushplus/internal/event"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -71,3 +71,4 @@ func RecoverPanic(name string, cleanup func()) {
 		}
 	}
 }
+

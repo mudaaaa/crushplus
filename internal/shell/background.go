@@ -8,7 +8,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/csync"
 )
 
 const (
@@ -199,3 +199,4 @@ func (bs *BackgroundShell) IsDone() bool {
 func (bs *BackgroundShell) Wait() {
 	<-bs.done
 }
+

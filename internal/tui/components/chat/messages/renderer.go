@@ -9,13 +9,13 @@ import (
 
 	"charm.land/lipgloss/v2"
 	"charm.land/lipgloss/v2/tree"
-	"github.com/charmbracelet/crush/internal/agent"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/ansiext"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/highlight"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/agent"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/ansiext"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/highlight"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
 	"github.com/charmbracelet/x/ansi"
 )
 
@@ -1197,3 +1197,4 @@ func prettifyToolName(name string) string {
 		return name
 	}
 }
+

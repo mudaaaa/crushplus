@@ -6,7 +6,7 @@ import (
 
 	"charm.land/lipgloss/v2"
 	"charm.land/lipgloss/v2/table"
-	"github.com/charmbracelet/crush/internal/config"
+	"github.com/mudaaaa/crushplus/internal/config"
 	"github.com/charmbracelet/x/term"
 	"github.com/spf13/cobra"
 )
@@ -64,3 +64,4 @@ var dataDirCmd = &cobra.Command{
 func init() {
 	dirsCmd.AddCommand(configDirCmd, dataDirCmd)
 }
+

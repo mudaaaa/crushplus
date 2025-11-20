@@ -11,7 +11,7 @@ import (
 	"charm.land/bubbles/v2/textinput"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/tui/exp/diffview"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/diffview"
 	"github.com/charmbracelet/glamour/v2/ansi"
 	"github.com/lucasb-eyer/go-colorful"
 	"github.com/rivo/uniseg"
@@ -701,3 +701,4 @@ func blendColors(size int, stops ...color.Color) []color.Color {
 
 	return blended
 }
+

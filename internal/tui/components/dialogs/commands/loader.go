@@ -11,11 +11,11 @@ import (
 	"strings"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/charmbracelet/crush/internal/agent/tools/mcp"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/agent/tools/mcp"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/home"
+	"github.com/mudaaaa/crushplus/internal/tui/components/chat"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 const (
@@ -270,3 +270,4 @@ type ShowMCPPromptArgumentsDialogMsg struct {
 	Prompt   *mcp.Prompt
 	OnSubmit func(arg map[string]string) tea.Cmd
 }
+

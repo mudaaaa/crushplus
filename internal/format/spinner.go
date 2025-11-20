@@ -7,7 +7,7 @@ import (
 	"os"
 
 	tea "charm.land/bubbletea/v2"
-	"github.com/charmbracelet/crush/internal/tui/components/anim"
+	"github.com/mudaaaa/crushplus/internal/tui/components/anim"
 	"github.com/charmbracelet/x/ansi"
 )
 
@@ -73,3 +73,4 @@ func (s *Spinner) Stop() {
 	s.prog.Quit()
 	<-s.done
 }
+

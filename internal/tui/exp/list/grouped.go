@@ -2,8 +2,8 @@ package list
 
 import (
 	tea "charm.land/bubbletea/v2"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core/layout"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 type Group[T Item] struct {
@@ -98,3 +98,4 @@ func (g *groupedList[T]) Groups() []Group[T] {
 func (g *groupedList[T]) Items() []Item {
 	return g.list.Items()
 }
+

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/shell"
+	"github.com/mudaaaa/crushplus/internal/shell"
 	"github.com/stretchr/testify/require"
 )
 
@@ -327,3 +327,4 @@ func TestBackgroundShell_AutoBackground(t *testing.T) {
 		require.Equal(t, bgShell.ID, retrieved.ID)
 	})
 }
+

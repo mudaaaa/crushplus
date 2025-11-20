@@ -8,7 +8,7 @@ import (
 	"reflect"
 	"runtime"
 
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/mudaaaa/crushplus/internal/version"
 	"github.com/posthog/posthog-go"
 )
 
@@ -105,3 +105,4 @@ func pairsToProps(props ...any) posthog.Properties {
 func isEven(n int) bool {
 	return n%2 == 0
 }
+

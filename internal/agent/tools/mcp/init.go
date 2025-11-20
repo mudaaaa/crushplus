@@ -17,12 +17,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/pubsub"
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/home"
+	"github.com/mudaaaa/crushplus/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/pubsub"
+	"github.com/mudaaaa/crushplus/internal/version"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -400,3 +400,4 @@ func stdioCheck(old *exec.Cmd) error {
 	}
 	return fmt.Errorf("%w: %s", err, string(out))
 }
+

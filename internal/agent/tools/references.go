@@ -15,8 +15,8 @@ import (
 	"strings"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/lsp"
 	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 )
 
@@ -188,3 +188,4 @@ func formatReferences(locations []protocol.Location) string {
 
 	return output.String()
 }
+

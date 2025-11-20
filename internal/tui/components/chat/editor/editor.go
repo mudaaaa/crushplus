@@ -17,19 +17,19 @@ import (
 	"charm.land/bubbles/v2/textarea"
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/app"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/message"
-	"github.com/charmbracelet/crush/internal/session"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/components/completions"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs/commands"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs/filepicker"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs/quit"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/app"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/message"
+	"github.com/mudaaaa/crushplus/internal/session"
+	"github.com/mudaaaa/crushplus/internal/tui/components/chat"
+	"github.com/mudaaaa/crushplus/internal/tui/components/completions"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core/layout"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs/commands"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs/filepicker"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs/quit"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 type Editor interface {
@@ -593,3 +593,4 @@ func New(app *app.App) Editor {
 
 	return e
 }
+

@@ -16,14 +16,14 @@ import (
 	"github.com/google/uuid"
 
 	"github.com/atotto/clipboard"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/message"
-	"github.com/charmbracelet/crush/internal/tui/components/anim"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/exp/list"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/message"
+	"github.com/mudaaaa/crushplus/internal/tui/components/anim"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core/layout"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/list"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 // CopyKey is the key binding for copying message content to the clipboard.
@@ -439,3 +439,4 @@ func (m *assistantSectionModel) IsSectionHeader() bool {
 func (m *messageCmp) ID() string {
 	return m.message.ID
 }
+

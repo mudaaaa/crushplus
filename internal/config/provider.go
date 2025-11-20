@@ -13,7 +13,7 @@ import (
 
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
 	"github.com/charmbracelet/catwalk/pkg/embedded"
-	"github.com/charmbracelet/crush/internal/home"
+	"github.com/mudaaaa/crushplus/internal/home"
 )
 
 type ProviderClient interface {
@@ -166,3 +166,4 @@ func loadProviders(autoUpdateDisabled bool, client ProviderClient, path string) 
 		return providers, nil
 	}
 }
+

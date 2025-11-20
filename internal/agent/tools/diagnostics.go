@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/lsp"
 	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 )
 
@@ -183,3 +183,4 @@ func countSeverity(diagnostics []string, severity string) int {
 	}
 	return count
 }
+

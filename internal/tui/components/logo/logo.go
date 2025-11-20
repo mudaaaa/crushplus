@@ -8,7 +8,7 @@ import (
 
 	"charm.land/lipgloss/v2"
 	"github.com/MakeNowJust/heredoc"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/charmbracelet/x/exp/slice"
 )
@@ -344,3 +344,4 @@ func stretchLetterformPart(s string, p letterformProps) string {
 	}
 	return lipgloss.JoinHorizontal(lipgloss.Top, parts...)
 }
+

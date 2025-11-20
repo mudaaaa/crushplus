@@ -11,9 +11,9 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/shell"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/home"
+	"github.com/mudaaaa/crushplus/internal/shell"
 )
 
 // Prompt represents a template-based prompt generator.
@@ -246,3 +246,4 @@ func getGitRecentCommits(ctx context.Context, sh *shell.Shell) (string, error) {
 func (p *Prompt) Name() string {
 	return p.name
 }
+

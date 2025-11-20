@@ -8,7 +8,7 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/charmbracelet/crush/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/csync"
 	"github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -91,3 +91,4 @@ func updateTools(name string, tools []*Tool) {
 	}
 	allTools.Set(name, tools)
 }
+

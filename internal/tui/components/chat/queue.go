@@ -5,7 +5,7 @@ import (
 	"strings"
 
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
 )
 
 func queuePill(queue int, t *styles.Theme) string {
@@ -26,3 +26,4 @@ func queuePill(queue int, t *styles.Theme) string {
 		PaddingRight(1).
 		Render(fmt.Sprintf("%s %d Queued", allTriangles, queue))
 }
+

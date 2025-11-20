@@ -4,8 +4,8 @@ import (
 	"context"
 	_ "embed"
 
-	"github.com/charmbracelet/crush/internal/agent/prompt"
-	"github.com/charmbracelet/crush/internal/config"
+	"github.com/mudaaaa/crushplus/internal/agent/prompt"
+	"github.com/mudaaaa/crushplus/internal/config"
 )
 
 //go:embed templates/coder.md.tpl
@@ -40,3 +40,4 @@ func InitializePrompt(cfg config.Config) (string, error) {
 	}
 	return systemPrompt.Build(context.Background(), "", "", cfg)
 }
+

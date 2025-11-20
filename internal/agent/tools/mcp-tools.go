@@ -5,8 +5,8 @@ import (
 	"fmt"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/agent/tools/mcp"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/agent/tools/mcp"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 // GetMCPTools gets all the currently available MCP tools.
@@ -110,3 +110,4 @@ func (m *Tool) Run(ctx context.Context, params fantasy.ToolCall) (fantasy.ToolRe
 	}
 	return fantasy.NewTextResponse(content), nil
 }
+

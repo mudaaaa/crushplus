@@ -9,8 +9,8 @@ import (
 
 	"charm.land/fantasy"
 	"charm.land/x/vcr"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/message"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/message"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
@@ -615,3 +615,4 @@ func TestCoderAgent(t *testing.T) {
 		})
 	}
 }
+

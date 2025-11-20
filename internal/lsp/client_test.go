@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/env"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/env"
 )
 
 func TestClient(t *testing.T) {
@@ -55,3 +55,4 @@ func TestClient(t *testing.T) {
 		t.Logf("Close failed as expected with dummy command: %v", err)
 	}
 }
+

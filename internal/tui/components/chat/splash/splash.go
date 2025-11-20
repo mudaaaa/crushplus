@@ -10,20 +10,20 @@ import (
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/agent"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/home"
-	"github.com/charmbracelet/crush/internal/tui/components/chat"
-	"github.com/charmbracelet/crush/internal/tui/components/core"
-	"github.com/charmbracelet/crush/internal/tui/components/core/layout"
-	"github.com/charmbracelet/crush/internal/tui/components/dialogs/models"
-	"github.com/charmbracelet/crush/internal/tui/components/logo"
-	lspcomponent "github.com/charmbracelet/crush/internal/tui/components/lsp"
-	"github.com/charmbracelet/crush/internal/tui/components/mcp"
-	"github.com/charmbracelet/crush/internal/tui/exp/list"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
-	"github.com/charmbracelet/crush/internal/version"
+	"github.com/mudaaaa/crushplus/internal/agent"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/home"
+	"github.com/mudaaaa/crushplus/internal/tui/components/chat"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core"
+	"github.com/mudaaaa/crushplus/internal/tui/components/core/layout"
+	"github.com/mudaaaa/crushplus/internal/tui/components/dialogs/models"
+	"github.com/mudaaaa/crushplus/internal/tui/components/logo"
+	lspcomponent "github.com/mudaaaa/crushplus/internal/tui/components/lsp"
+	"github.com/mudaaaa/crushplus/internal/tui/components/mcp"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/list"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/version"
 )
 
 type Splash interface {
@@ -726,3 +726,4 @@ func (s *splashCmp) IsShowingAPIKey() bool {
 func (s *splashCmp) IsAPIKeyValid() bool {
 	return s.isAPIKeyValid
 }
+

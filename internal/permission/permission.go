@@ -8,8 +8,8 @@ import (
 	"slices"
 	"sync"
 
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/pubsub"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/pubsub"
 	"github.com/google/uuid"
 )
 
@@ -232,3 +232,4 @@ func NewPermissionService(workingDir string, skip bool, allowedTools []string) S
 		pendingRequests:     csync.NewMap[string, chan bool](),
 	}
 }
+

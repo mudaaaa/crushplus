@@ -11,8 +11,8 @@ import (
 
 	"github.com/bmatcuk/doublestar/v4"
 	"github.com/charlievieth/fastwalk"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/home"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/home"
 )
 
 type FileInfo struct {
@@ -221,3 +221,4 @@ func truncate[T any](input []T, limit int) ([]T, bool) {
 	}
 	return input, false
 }
+

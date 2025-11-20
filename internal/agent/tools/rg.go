@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/charmbracelet/crush/internal/log"
+	"github.com/mudaaaa/crushplus/internal/log"
 )
 
 var getRg = sync.OnceValue(func() string {
@@ -51,3 +51,4 @@ func getRgSearchCmd(ctx context.Context, pattern, path, include string) *exec.Cm
 
 	return exec.CommandContext(ctx, name, args...)
 }
+

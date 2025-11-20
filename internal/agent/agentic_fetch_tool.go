@@ -11,9 +11,9 @@ import (
 
 	"charm.land/fantasy"
 
-	"github.com/charmbracelet/crush/internal/agent/prompt"
-	"github.com/charmbracelet/crush/internal/agent/tools"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/agent/prompt"
+	"github.com/mudaaaa/crushplus/internal/agent/tools"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 //go:embed templates/agentic_fetch.md
@@ -215,3 +215,4 @@ func (c *coordinator) agenticFetchTool(_ context.Context, client *http.Client) (
 			return fantasy.NewTextResponse(result.Response.Content.Text()), nil
 		}), nil
 }
+

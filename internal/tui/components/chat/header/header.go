@@ -6,14 +6,14 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/fsext"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/pubsub"
-	"github.com/charmbracelet/crush/internal/session"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/pubsub"
+	"github.com/mudaaaa/crushplus/internal/session"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 )
@@ -165,3 +165,4 @@ func (h *header) SetWidth(width int) tea.Cmd {
 func (h *header) ShowingDetails() bool {
 	return h.detailsOpen
 }
+

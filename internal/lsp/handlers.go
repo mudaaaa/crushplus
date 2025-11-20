@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"log/slog"
 
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/lsp/util"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/lsp/util"
 	"github.com/charmbracelet/x/powernap/pkg/lsp/protocol"
 )
 
@@ -124,3 +124,4 @@ func HandleDiagnostics(client *Client, params json.RawMessage) {
 		client.onDiagnosticsChanged(client.name, totalCount)
 	}
 }
+

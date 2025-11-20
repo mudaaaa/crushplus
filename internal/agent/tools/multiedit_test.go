@@ -6,11 +6,11 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/history"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/permission"
-	"github.com/charmbracelet/crush/internal/pubsub"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/history"
+	"github.com/mudaaaa/crushplus/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/pubsub"
 	"github.com/stretchr/testify/require"
 )
 
@@ -223,3 +223,4 @@ func TestMultiEditAllEditsFail(t *testing.T) {
 	require.Len(t, failedEdits, 2)
 	require.Equal(t, content, currentContent, "Content should be unchanged")
 }
+

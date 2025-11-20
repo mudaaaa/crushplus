@@ -6,7 +6,7 @@ import (
 	_ "net/http/pprof"
 	"os"
 
-	"github.com/charmbracelet/crush/internal/cmd"
+	"github.com/mudaaaa/crushplus/internal/cmd"
 	_ "github.com/joho/godotenv/autoload"
 )
 
@@ -22,3 +22,4 @@ func main() {
 
 	cmd.Execute()
 }
+

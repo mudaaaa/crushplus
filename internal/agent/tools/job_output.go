@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/shell"
+	"github.com/mudaaaa/crushplus/internal/shell"
 )
 
 const (
@@ -83,3 +83,4 @@ func NewJobOutputTool() fantasy.AgentTool {
 			return fantasy.WithResponseMetadata(fantasy.NewTextResponse(result), metadata), nil
 		})
 }
+

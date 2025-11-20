@@ -10,8 +10,8 @@ import (
 	"sync"
 
 	"github.com/charlievieth/fastwalk"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/home"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/home"
 	ignore "github.com/sabhiram/go-gitignore"
 )
 
@@ -251,3 +251,4 @@ func ListDirectory(initialPath string, ignorePatterns []string, depth, limit int
 	matches, truncated := truncate(slices.Collect(found.Seq()), limit)
 	return matches, truncated || errors.Is(err, filepath.SkipAll), nil
 }
+

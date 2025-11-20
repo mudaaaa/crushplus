@@ -12,10 +12,10 @@ import (
 	"unicode/utf8"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/filepathext"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/filepathext"
+	"github.com/mudaaaa/crushplus/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 //go:embed view.md
@@ -311,3 +311,4 @@ func (s *LineScanner) Text() string {
 func (s *LineScanner) Err() error {
 	return s.scanner.Err()
 }
+

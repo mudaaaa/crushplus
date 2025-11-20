@@ -13,8 +13,8 @@ import (
 	"time"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/filepathext"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/filepathext"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 type DownloadParams struct {
@@ -155,3 +155,4 @@ func NewDownloadTool(permissions permission.Service, workingDir string, client *
 			return fantasy.NewTextResponse(responseMsg), nil
 		})
 }
+

@@ -5,9 +5,9 @@ import (
 	"maps"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/lsp"
-	"github.com/charmbracelet/crush/internal/pubsub"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/lsp"
+	"github.com/mudaaaa/crushplus/internal/pubsub"
 )
 
 // LSPEventType represents the type of LSP event
@@ -97,3 +97,4 @@ func updateLSPDiagnostics(name string, diagnosticCount int) {
 		})
 	}
 }
+

@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/alecthomas/chroma/v2/styles"
-	"github.com/charmbracelet/crush/internal/tui/exp/diffview"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/diffview"
 	"github.com/charmbracelet/x/ansi"
 	"github.com/charmbracelet/x/exp/golden"
 )
@@ -347,3 +347,4 @@ func assertHeight(t *testing.T, expected int, output string) {
 		t.Errorf("expected output height to be == %d, got %d", expected, lines)
 	}
 }
+

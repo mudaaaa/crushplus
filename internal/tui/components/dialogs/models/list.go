@@ -8,10 +8,10 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/tui/exp/list"
-	"github.com/charmbracelet/crush/internal/tui/styles"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/list"
+	"github.com/mudaaaa/crushplus/internal/tui/styles"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 type listModel = list.FilterableGroupList[list.CompletionItem[ModelOption]]
@@ -338,3 +338,4 @@ func (m *ModelListComponent) GetModelType() int {
 func (m *ModelListComponent) SetInputPlaceholder(placeholder string) {
 	m.list.SetInputPlaceholder(placeholder)
 }
+

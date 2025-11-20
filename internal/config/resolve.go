@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/charmbracelet/crush/internal/env"
-	"github.com/charmbracelet/crush/internal/shell"
+	"github.com/mudaaaa/crushplus/internal/env"
+	"github.com/mudaaaa/crushplus/internal/shell"
 )
 
 type VariableResolver interface {
@@ -174,3 +174,4 @@ func (r *environmentVariableResolver) ResolveValue(value string) (string, error)
 	}
 	return resolvedValue, nil
 }
+

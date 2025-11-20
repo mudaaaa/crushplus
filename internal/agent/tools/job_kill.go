@@ -6,7 +6,7 @@ import (
 	"fmt"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/shell"
+	"github.com/mudaaaa/crushplus/internal/shell"
 )
 
 const (
@@ -57,3 +57,4 @@ func NewJobKillTool() fantasy.AgentTool {
 			return fantasy.WithResponseMetadata(fantasy.NewTextResponse(result), metadata), nil
 		})
 }
+

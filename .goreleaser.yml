@@ -70,7 +70,7 @@ builds:
       - goos: windows
         goarch: arm
     ldflags:
-      - -s -w -X github.com/charmbracelet/crush/internal/version.Version={{.Version}}
+      - -s -w -X github.com/mudaaaa/crushplus/internal/version.Version={{.Version}}
     flags:
       - -trimpath
 
@@ -204,8 +204,8 @@ scoops:
 
 npms:
   - name: "@charmland/crush"
-    repository: "git+https://github.com/charmbracelet/crush.git"
-    bugs: https://github.com/charmbracelet/crush/issues
+    repository: "git+https://github.com/mudaaaa/crushplus.git"
+    bugs: https://github.com/mudaaaa/crushplus/issues
     access: public
     disable: "{{ with .Prerelease }}true{{ end }}"
 
@@ -271,8 +271,8 @@ winget:
   - publisher: charmbracelet
     copyright: Charmbracelet, Inc
     publisher_url: https://charm.land
-    release_notes_url: "https://github.com/charmbracelet/crush/releases/tag/{{.Tag}}"
-    license_url: https://github.com/charmbracelet/crush/blob/main/LICENSE.md
+    release_notes_url: "https://github.com/mudaaaa/crushplus/releases/tag/{{.Tag}}"
+    license_url: https://github.com/mudaaaa/crushplus/blob/main/LICENSE.md
     skip_upload: "{{ with .Prerelease }}true{{ end }}"
     commit_author:
       name: "Charm"
@@ -340,3 +340,4 @@ release:
   footer:
     from_url:
       url: https://raw.githubusercontent.com/charmbracelet/meta/main/footer.md
+

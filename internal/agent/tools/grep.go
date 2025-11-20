@@ -19,7 +19,7 @@ import (
 	"time"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/fsext"
+	"github.com/mudaaaa/crushplus/internal/fsext"
 )
 
 // regexCache provides thread-safe caching of compiled regex patterns
@@ -414,3 +414,4 @@ func globToRegex(glob string) string {
 
 	return regexPattern
 }
+

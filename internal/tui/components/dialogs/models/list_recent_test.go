@@ -10,9 +10,9 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/config"
-	"github.com/charmbracelet/crush/internal/log"
-	"github.com/charmbracelet/crush/internal/tui/exp/list"
+	"github.com/mudaaaa/crushplus/internal/config"
+	"github.com/mudaaaa/crushplus/internal/log"
+	"github.com/mudaaaa/crushplus/internal/tui/exp/list"
 	"github.com/stretchr/testify/require"
 )
 
@@ -367,3 +367,4 @@ func TestModelList_AllRecentsInvalid(t *testing.T) {
 	require.True(t, ok, "large key should be nil or array")
 	require.Empty(t, largeAny, "persisted recents should be empty after pruning all invalid entries")
 }
+

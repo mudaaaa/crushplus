@@ -9,8 +9,8 @@ import (
 	"testing"
 
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/env"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/env"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -1248,3 +1248,4 @@ func TestConfig_configureSelectedModels(t *testing.T) {
 		require.Equal(t, int64(100), large.MaxTokens)
 	})
 }
+

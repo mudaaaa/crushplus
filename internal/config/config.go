@@ -12,8 +12,8 @@ import (
 	"time"
 
 	"github.com/charmbracelet/catwalk/pkg/catwalk"
-	"github.com/charmbracelet/crush/internal/csync"
-	"github.com/charmbracelet/crush/internal/env"
+	"github.com/mudaaaa/crushplus/internal/csync"
+	"github.com/mudaaaa/crushplus/internal/env"
 	"github.com/invopop/jsonschema"
 	"github.com/tidwall/sjson"
 )
@@ -703,3 +703,4 @@ func ptrValOr[T any](t *T, el T) T {
 	}
 	return *t
 }
+

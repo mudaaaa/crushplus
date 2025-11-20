@@ -8,7 +8,7 @@ import (
 
 	"charm.land/lipgloss/v2"
 	"github.com/alecthomas/chroma/v2"
-	"github.com/charmbracelet/crush/internal/ansiext"
+	"github.com/mudaaaa/crushplus/internal/ansiext"
 )
 
 var _ chroma.Formatter = chromaFormatter{}
@@ -55,3 +55,4 @@ func (c chromaFormatter) Format(w io.Writer, style *chroma.Style, it chroma.Iter
 	}
 	return nil
 }
+

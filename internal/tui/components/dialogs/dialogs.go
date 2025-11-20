@@ -5,7 +5,7 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 	"charm.land/lipgloss/v2"
-	"github.com/charmbracelet/crush/internal/tui/util"
+	"github.com/mudaaaa/crushplus/internal/tui/util"
 )
 
 type DialogID string
@@ -163,3 +163,4 @@ func (d dialogCmp) GetLayers() []*lipgloss.Layer {
 func (d dialogCmp) HasDialogs() bool {
 	return len(d.dialogs) > 0
 }
+

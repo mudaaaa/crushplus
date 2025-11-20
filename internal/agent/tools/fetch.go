@@ -13,7 +13,7 @@ import (
 	"charm.land/fantasy"
 	md "github.com/JohannesKaufmann/html-to-markdown"
 	"github.com/PuerkitoBio/goquery"
-	"github.com/charmbracelet/crush/internal/permission"
+	"github.com/mudaaaa/crushplus/internal/permission"
 )
 
 const FetchToolName = "fetch"
@@ -185,3 +185,4 @@ func convertHTMLToMarkdown(html string) (string, error) {
 
 	return markdown, nil
 }
+

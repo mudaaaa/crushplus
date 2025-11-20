@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"charm.land/fantasy"
-	"github.com/charmbracelet/crush/internal/event"
+	"github.com/mudaaaa/crushplus/internal/event"
 )
 
 func (a sessionAgent) eventPromptSent(sessionID string) {
@@ -49,3 +49,4 @@ func (a sessionAgent) eventCommon(sessionID string, model Model) []any {
 		"yolo mode", a.isYolo,
 	}
 }
+

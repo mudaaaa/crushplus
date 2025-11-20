@@ -5,7 +5,7 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/charmbracelet/crush/internal/env"
+	"github.com/mudaaaa/crushplus/internal/env"
 	"github.com/stretchr/testify/require"
 )
 
@@ -330,3 +330,4 @@ func TestNewEnvironmentVariableResolver(t *testing.T) {
 	require.NotNil(t, resolver)
 	require.Implements(t, (*VariableResolver)(nil), resolver)
 }
+
