@@ -1,7 +1,7 @@
 Reads and displays file contents with line numbers for examining code, logs, or text data.
 
 <usage>
-- Provide file path to read
+- Provide full file path to read
 - Optional offset: start reading from specific line (0-based)
 - Optional limit: control lines read (default 2000)
 - Don't use for directories (use LS tool instead)

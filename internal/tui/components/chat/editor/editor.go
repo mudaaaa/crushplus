@@ -62,7 +62,7 @@ type editorCmp struct {
 	deleteMode         bool
 	readyPlaceholder   string
 	workingPlaceholder string
-	shimmerOffset      float64 // For animating placeholder shimmer effect
+	shimmerOffset      int     // For animating placeholder dots
 
 	keyMap EditorKeyMap
 
@@ -189,10 +189,10 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 	switch msg := msg.(type) {
 	case shimmerTickMsg:
-		// Update shimmer offset for placeholder animation
-		m.shimmerOffset += 0.05
-		if m.shimmerOffset > 1.0 {
-			m.shimmerOffset = 0.0
+		// Update dot animation for placeholder
+		m.shimmerOffset++
+		if m.shimmerOffset > 3 {
+			m.shimmerOffset = 0
 		}
 		// Update the placeholder to trigger a re-render
 		if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
@@ -425,11 +425,6 @@ var readyPlaceholders = [...]string{
 }
 
 var workingPlaceholders = [...]string{
-	"Cogitating...",
-	"Calculating...",
-	"Analyzing...",
-	"Thinking...",
-	"Synthesizing...",
 	"Compiling thoughts...",
 	"Crunching numbers...",
 	"Spinning up neurons...",
@@ -519,78 +514,25 @@ func (m *editorCmp) randomizePlaceholders() {
 	m.readyPlaceholder = readyPlaceholders[rand.Intn(len(readyPlaceholders))]
 }
 
-// shimmerPlaceholder applies a sliding gradient shimmer effect to the placeholder text
+// shimmerPlaceholder applies animated dots to placeholder text
 func (m *editorCmp) shimmerPlaceholder(text string) string {
 	if text == "" {
 		return ""
 	}
 	
-	// Instead of using ANSI codes, we'll use different Unicode characters to create a visual effect
-	// This avoids the issue with textarea not handling ANSI codes properly
-	
-	// Define characters for different shimmer intensities
-	shimmerChars := []string{
-		" ",      // Darkest (empty space)
-		"░",      // Light shade
-		"▒",      // Medium shade  
-		"▓",      // Dark shade
-		"█",      // Full block
+	// Simple dot animation patterns
+	dotPatterns := []string{
+		"",     // No dots
+		".",    // One dot
+		"..",   // Two dots
+		"...",  // Three dots
 	}
 	
-	// Calculate shimmer position
-	textRunes := []rune(text)
-	if len(textRunes) == 0 {
-		return ""
-	}
-	
-	var result strings.Builder
-	
-	for i, r := range textRunes {
-		// Calculate position in shimmer wave (0.0 to 1.0)
-		pos := float64(i) / float64(len(textRunes))
-		
-		// Create a wave that moves with shimmerOffset
-		wave := pos - m.shimmerOffset
-		if wave < 0 {
-			wave += 1.0
-		}
-		
-		// Calculate brightness based on wave position
-		brightness := 1.0 - 2.0*abs(wave-0.5)
-		
-		// Choose character based on brightness
-		var charIndex int
-		if brightness > 0.7 {
-			charIndex = 4 // Full block
-		} else if brightness > 0.5 {
-			charIndex = 3 // Dark shade
-		} else if brightness > 0.3 {
-			charIndex = 2 // Medium shade
-		} else if brightness > 0.1 {
-			charIndex = 1 // Light shade
-		} else {
-			charIndex = 0 // Empty
-		}
-		
-		// If it's not the actual character, use the shade character
-		if charIndex < 4 {
-			result.WriteString(shimmerChars[charIndex])
-		} else {
-			// For the brightest part, show the actual character
-			result.WriteString(string(r))
-		}
-	}
-	
-	return result.String()
+	// Use the shimmerOffset to cycle through dot patterns
+	return text + dotPatterns[m.shimmerOffset]
 }
 
-// abs returns the absolute value of a float64
-func abs(x float64) float64 {
-	if x < 0 {
-		return -x
-	}
-	return x
-}
+
 
 func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
