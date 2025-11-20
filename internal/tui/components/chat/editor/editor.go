@@ -527,122 +527,60 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 	
 	t := styles.CurrentTheme()
 	
-	// Create a sliding gradient effect across the text using only the primary color
-	// We'll create segments of text with different brightness levels
+	// Create shimmer colors using only the primary color with varying brightness
+	// We'll create a gradient from muted to primary and back
+	colors := make([]color.Color, 5)
+	
+	// Calculate the shimmer position based on shimmerOffset
+	phase := m.shimmerOffset
+	
+	// Create color stops for the shimmer effect
+	colors[0] = t.FgMuted // Darkest
+	colors[1] = styles.Darken(t.Primary, 40) // Dark
+	colors[2] = styles.Darken(t.Primary, 20) // Medium
+	colors[3] = t.Primary // Brightest
+	colors[4] = styles.Darken(t.Primary, 40) // Dark (for wrap-around)
+	
+	// Apply the gradient using the existing theme system
+	// We'll use a custom approach that creates a moving wave
 	textRunes := []rune(text)
 	if len(textRunes) == 0 {
 		return ""
 	}
 	
-	// Calculate the shimmer wave position
-	waveWidth := 0.3 // Width of the bright part of the wave
-	
-	var segments []string
-	segmentStart := 0
-	
-	for i := 0; i < len(textRunes); i++ {
-		// Calculate position in the shimmer wave (0.0 to 1.0)
-		pos := float64(i) / float64(len(textRunes))
-		
-		// Create a wave that moves with shimmerOffset
-		wave := pos - m.shimmerOffset
-		if wave < 0 {
-			wave += 1.0
-		}
-		
-		// Calculate brightness based on wave position
-		brightness := 1.0 - 2.0*abs(wave-0.5)
-		
-		var currentColor color.Color
-		if brightness > 0.7 {
-			// Brightest part - full primary color
-			currentColor = t.Primary
-		} else if brightness > 0.4 {
-			// Mid brightness - slightly dimmed primary (20% darker)
-			currentColor = styles.Darken(t.Primary, 20)
-		} else if brightness > 0.2 {
-			// Lower brightness - more dimmed primary (40% darker)
-			currentColor = styles.Darken(t.Primary, 40)
-		} else {
-			// Dimmest part - muted color
-			currentColor = t.FgMuted
-		}
-		
-		// Check if we need to start a new segment (color change)
-		if i > 0 {
-			// Get the previous color
-			prevPos := float64(i-1) / float64(len(textRunes))
-			prevWave := prevPos - m.shimmerOffset
-			if prevWave < 0 {
-				prevWave += 1.0
-			}
-			prevBrightness := 1.0 - 2.0*abs(prevWave-0.5)
-			
-			var prevColor color.Color
-			if prevBrightness > 0.7 {
-				prevColor = t.Primary
-			} else if prevBrightness > 0.4 {
-				prevColor = styles.Darken(t.Primary, 20)
-			} else if prevBrightness > 0.2 {
-				prevColor = styles.Darken(t.Primary, 40)
-			} else {
-				prevColor = t.FgMuted
-			}
-			
-			// If color changed, close the previous segment and start a new one
-			if !colorsEqual(prevColor, currentColor) {
-				segment := string(textRunes[segmentStart:i])
-				if segment != "" {
-					style := t.S().Base.Foreground(prevColor)
-					segments = append(segments, style.Render(segment))
-				}
-				segmentStart = i
-			}
-		}
-	}
-	
-	// Add the final segment
-	if segmentStart < len(textRunes) {
-		segment := string(textRunes[segmentStart:])
-		if segment != "" {
-			// Calculate the color for the final segment
-			pos := float64(segmentStart) / float64(len(textRunes))
-			wave := pos - m.shimmerOffset
-			if wave < 0 {
-				wave += 1.0
-			}
-			brightness := 1.0 - 2.0*abs(wave-0.5)
-			
-			var finalColor color.Color
-			if brightness > 0.7 {
-				finalColor = t.Primary
-			} else if brightness > 0.4 {
-				finalColor = styles.Darken(t.Primary, 20)
-			} else if brightness > 0.2 {
-				finalColor = styles.Darken(t.Primary, 40)
-			} else {
-				finalColor = t.FgMuted
-			}
-			
-			style := t.S().Base.Foreground(finalColor)
-			segments = append(segments, style.Render(segment))
-		}
-	}
-	
-	// Join all segments
+	// Create segments with different colors based on the shimmer position
 	var result strings.Builder
-	for _, segment := range segments {
-		result.WriteString(segment)
+	textLen := len(textRunes)
+	
+	for i, r := range textRunes {
+		// Calculate position in text (0.0 to 1.0)
+		pos := float64(i) / float64(textLen)
+		
+		// Calculate which color to use based on shimmer position
+		// Create a wave that moves across the text
+		wavePos := (pos - phase + 1.0) // +1.0 to handle negative values
+		if wavePos > 1.0 {
+			wavePos -= 1.0
+		}
+		
+		// Map wave position to color index
+		var colorIndex int
+		if wavePos < 0.25 {
+			colorIndex = 0
+		} else if wavePos < 0.5 {
+			colorIndex = 1
+		} else if wavePos < 0.75 {
+			colorIndex = 2
+		} else {
+			colorIndex = 3
+		}
+		
+		// Apply the color using the theme's base style
+		style := t.S().Base.Foreground(colors[colorIndex])
+		result.WriteString(style.Render(string(r)))
 	}
 	
 	return result.String()
-}
-
-// colorsEqual checks if two colors are equal
-func colorsEqual(c1, c2 color.Color) bool {
-	r1, g1, b1, _ := c1.RGBA()
-	r2, g2, b2, _ := c2.RGBA()
-	return r1 == r2 && g1 == g2 && b1 == b2
 }
 
 // abs returns the absolute value of a float64
