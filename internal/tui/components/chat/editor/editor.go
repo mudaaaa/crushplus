@@ -525,59 +525,60 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 		return ""
 	}
 	
-	t := styles.CurrentTheme()
+	// Instead of using ANSI codes, we'll use different Unicode characters to create a visual effect
+	// This avoids the issue with textarea not handling ANSI codes properly
 	
-	// Create shimmer colors using only the primary color with varying brightness
-	// We'll create a gradient from muted to primary and back
-	colors := make([]color.Color, 5)
+	// Define characters for different shimmer intensities
+	shimmerChars := []string{
+		" ",      // Darkest (empty space)
+		"░",      // Light shade
+		"▒",      // Medium shade  
+		"▓",      // Dark shade
+		"█",      // Full block
+	}
 	
-	// Calculate the shimmer position based on shimmerOffset
-	phase := m.shimmerOffset
-	
-	// Create color stops for the shimmer effect
-	colors[0] = t.FgMuted // Darkest
-	colors[1] = styles.Darken(t.Primary, 40) // Dark
-	colors[2] = styles.Darken(t.Primary, 20) // Medium
-	colors[3] = t.Primary // Brightest
-	colors[4] = styles.Darken(t.Primary, 40) // Dark (for wrap-around)
-	
-	// Apply the gradient using the existing theme system
-	// We'll use a custom approach that creates a moving wave
+	// Calculate shimmer position
 	textRunes := []rune(text)
 	if len(textRunes) == 0 {
 		return ""
 	}
 	
-	// Create segments with different colors based on the shimmer position
 	var result strings.Builder
-	textLen := len(textRunes)
 	
 	for i, r := range textRunes {
-		// Calculate position in text (0.0 to 1.0)
-		pos := float64(i) / float64(textLen)
+		// Calculate position in shimmer wave (0.0 to 1.0)
+		pos := float64(i) / float64(len(textRunes))
 		
-		// Calculate which color to use based on shimmer position
-		// Create a wave that moves across the text
-		wavePos := (pos - phase + 1.0) // +1.0 to handle negative values
-		if wavePos > 1.0 {
-			wavePos -= 1.0
+		// Create a wave that moves with shimmerOffset
+		wave := pos - m.shimmerOffset
+		if wave < 0 {
+			wave += 1.0
 		}
 		
-		// Map wave position to color index
-		var colorIndex int
-		if wavePos < 0.25 {
-			colorIndex = 0
-		} else if wavePos < 0.5 {
-			colorIndex = 1
-		} else if wavePos < 0.75 {
-			colorIndex = 2
+		// Calculate brightness based on wave position
+		brightness := 1.0 - 2.0*abs(wave-0.5)
+		
+		// Choose character based on brightness
+		var charIndex int
+		if brightness > 0.7 {
+			charIndex = 4 // Full block
+		} else if brightness > 0.5 {
+			charIndex = 3 // Dark shade
+		} else if brightness > 0.3 {
+			charIndex = 2 // Medium shade
+		} else if brightness > 0.1 {
+			charIndex = 1 // Light shade
 		} else {
-			colorIndex = 3
+			charIndex = 0 // Empty
 		}
 		
-		// Apply the color using the theme's base style
-		style := t.S().Base.Foreground(colors[colorIndex])
-		result.WriteString(style.Render(string(r)))
+		// If it's not the actual character, use the shade character
+		if charIndex < 4 {
+			result.WriteString(shimmerChars[charIndex])
+		} else {
+			// For the brightest part, show the actual character
+			result.WriteString(string(r))
+		}
 	}
 	
 	return result.String()
