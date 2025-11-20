@@ -63,6 +63,27 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
+	// Add gold + to the H letter (last letter in CRUSH)
+	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
+	if len(lines) >= 3 {
+		// The bottom line (index 2) contains the H
+		bottomLine := lines[2]
+		// Find the position of the H's middle section (it's the last letter)
+		// We need to find where the H starts and insert the + in its middle
+		runes := []rune(bottomLine)
+		lineLen := len(runes)
+		
+		// The H is at the end, find approximately where its middle would be
+		// Assuming roughly equal spacing, the H middle is near the end
+		// We'll insert the + about 3-4 characters from the end (in the H's middle section)
+		if lineLen > 4 {
+			goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
+			insertPos := lineLen - 3 // Position in the middle of the H's bottom section
+			lines[2] = string(runes[:insertPos]) + goldPlus + string(runes[insertPos+1:])
+		}
+		crush = strings.Join(lines, "\n")
+	}
+
 	// Charm and version.
 	metaRowGap := 1
 	maxVersionWidth := crushWidth - lipgloss.Width(charm) - metaRowGap
@@ -190,44 +211,24 @@ func letterH(stretch bool) string {
 	//
 	// █   █
 	// █▀▀▀█
-	// ▀ + ▀
+	// ▀   ▀
 
 	side := heredoc.Doc(`
 		█
 		█
 		▀`)
-	
-	// Build the middle part with the + in the bottom section
-	middleTop := heredoc.Doc(`
+	middle := heredoc.Doc(`
 
 		▀
 	`)
-	
-	middlePart := stretchLetterformPart(middleTop, letterformProps{
-		stretch:    stretch,
-		width:      3,
-		minStretch: 8,
-		maxStretch: 12,
-	})
-	
-	// Insert the gold + in the middle of the bottom line
-	lines := strings.Split(middlePart, "\n")
-	if len(lines) >= 3 && len(lines[2]) > 0 {
-		bottomLine := lines[2]
-		// Find the middle position
-		runes := []rune(bottomLine)
-		midPos := len(runes) / 2
-		if midPos > 0 && midPos < len(runes) {
-			goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
-			// Replace the middle character with the gold +
-			lines[2] = string(runes[:midPos]) + goldPlus + string(runes[midPos+1:])
-		}
-		middlePart = strings.Join(lines, "\n")
-	}
-	
 	return joinLetterform(
 		side,
-		middlePart,
+		stretchLetterformPart(middle, letterformProps{
+			stretch:    stretch,
+			width:      3,
+			minStretch: 8,
+			maxStretch: 12,
+		}),
 		side,
 	)
 }
