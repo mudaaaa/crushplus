@@ -11,6 +11,7 @@ import (
 	"runtime"
 	"slices"
 	"strings"
+	"time"
 	"unicode"
 
 	"charm.land/bubbles/v2/key"
@@ -60,6 +61,7 @@ type editorCmp struct {
 	deleteMode         bool
 	readyPlaceholder   string
 	workingPlaceholder string
+	shimmerOffset      float64 // For animating placeholder shimmer effect
 
 	keyMap EditorKeyMap
 
@@ -92,6 +94,9 @@ const (
 type OpenEditorMsg struct {
 	Text string
 }
+
+type shimmerTickMsg struct{}
+
 
 func (m *editorCmp) openEditor(value string) tea.Cmd {
 	editor := os.Getenv("EDITOR")
@@ -135,7 +140,13 @@ func (m *editorCmp) openEditor(value string) tea.Cmd {
 }
 
 func (m *editorCmp) Init() tea.Cmd {
-	return nil
+	return m.shimmerTick()
+}
+
+func (m *editorCmp) shimmerTick() tea.Cmd {
+	return tea.Tick(time.Millisecond*50, func(time.Time) tea.Msg {
+		return shimmerTickMsg{}
+	})
 }
 
 func (m *editorCmp) send() tea.Cmd {
@@ -176,6 +187,13 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	var cmds []tea.Cmd
 	switch msg := msg.(type) {
+	case shimmerTickMsg:
+		// Update shimmer offset for placeholder animation
+		m.shimmerOffset += 0.05
+		if m.shimmerOffset \u003e 1.0 {
+			m.shimmerOffset = 0.0
+		}
+		return m, m.shimmerTick()
 	case tea.WindowSizeMsg:
 		return m, m.repositionCompletions
 	case filepicker.FilePickedMsg:
@@ -398,19 +416,97 @@ func (m *editorCmp) Cursor() *tea.Cursor {
 }
 
 var readyPlaceholders = [...]string{
-	"Ready!",
-	"Ready...",
-	"Ready?",
-	"Ready for instructions",
+	"Awaiting Instructions..."
 }
 
 var workingPlaceholders = [...]string{
-	"Working!",
-	"Working...",
-	"Brrrrr...",
-	"Prrrrrrrr...",
-	"Processing...",
+	"Cogitating...",
+	"Calculating...",
+	"Analyzing...",
 	"Thinking...",
+	"Synthesizing...",
+	"Compiling thoughts...",
+	"Crunching numbers...",
+	"Spinning up neurons...",
+	"Warming up the GPUs...",
+	"Consulting the docs...",
+	"Reading the tea leaves...",
+	"Asking the magic 8-ball...",
+	"Summoning inspiration...",
+	"Channeling caffeine...",
+	"Engaging brain cells...",
+	"Connecting the dots...",
+	"Weaving code magic...",
+	"Brewing solutions...",
+	"Baking fresh code...",
+	"Cooking something up...",
+	"Mixing ingredients...",
+	"Following the recipe...",
+	"Sharpening pencils...",
+	"Stretching fingers...",
+	"Limbering up...",
+	"Doing mental push-ups...",
+	"Exercising logic muscles...",
+	"Flexing algorithms...",
+	"Untangling spaghetti...",
+	"Herding cats...",
+	"Counting electrons...",
+	"Aligning chakras...",
+	"Consulting the elders...",
+	"Deciphering runes...",
+	"Spinning the hamster wheel...",
+	"Feeding the hamsters...",
+	"Waking up the hamsters...",
+	"Charging flux capacitor...",
+	"Reversing polarity...",
+	"Reticulating splines...",
+	"Generating witty banter...",
+	"Contemplating existence...",
+	"Having an existential crisis...",
+	"Questioning everything...",
+	"Finding meaning...",
+	"Achieving enlightenment...",
+	"Reaching nirvana...",
+	"Transcending reality...",
+	"Bending spoons...",
+	"Warping spacetime...",
+	"Folding proteins...",
+	"Splitting atoms...",
+	"Fusing neurons...",
+	"Defragmenting brain...",
+	"Clearing cache...",
+	"Downloading inspiration...",
+	"Uploading creativity...",
+	"Synchronizing synapses...",
+	"Optimizing pathways...",
+	"Pruning decision trees...",
+	"Watering logic gardens...",
+	"Planting idea seeds...",
+	"Harvesting thoughts...",
+	"Mining for insights...",
+	"Digging deeper...",
+	"Excavating solutions...",
+	"Unearthing answers...",
+	"Polishing gems...",
+	"Refining concepts...",
+	"Distilling wisdom...",
+	"Fermenting ideas...",
+	"Aging like fine wine...",
+	"Marinating in data...",
+	"Simmering gently...",
+	"Reducing complexity...",
+	"Whisking vigorously...",
+	"Kneading the dough...",
+	"Letting it rise...",
+	"Proofing concepts...",
+	"Glazing the donut...",
+	"Sprinkling magic dust...",
+	"Adding secret sauce...",
+	"Seasoning to taste...",
+	"Garnishing output...",
+	"Plating presentation...",
+	"Serving hot...",
+	"Bon appétit...",
 }
 
 func (m *editorCmp) randomizePlaceholders() {
@@ -418,11 +514,68 @@ func (m *editorCmp) randomizePlaceholders() {
 	m.readyPlaceholder = readyPlaceholders[rand.Intn(len(readyPlaceholders))]
 }
 
+// shimmerPlaceholder applies a sliding gradient shimmer effect to the placeholder text
+func (m *editorCmp) shimmerPlaceholder(text string) string {
+	if text == "" {
+		return ""
+	}
+	
+	t := styles.CurrentTheme()
+	runes := []rune(text)
+	var result strings.Builder
+	
+	// Create a sliding gradient effect across the text
+	for i, r := range runes {
+		// Calculate position in the shimmer wave (0.0 to 1.0)
+		pos := float64(i) / float64(len(runes))
+		
+		// Create a wave that moves with shimmerOffset
+		wave := pos - m.shimmerOffset
+		if wave \u003c 0 {
+			wave += 1.0
+		}
+		
+		// Use a smooth gradient from muted to primary and back
+		// Peak brightness at wave = 0.5
+		brightness := 1.0 - 2.0*abs(wave-0.5)
+		
+		// Interpolate between muted and primary colors based on brightness
+		var style lipgloss.Style
+		if brightness \u003e 0.6 {
+			// Bright part of shimmer - use primary/secondary gradient
+			gradPos := (brightness - 0.6) / 0.4
+			if int(m.shimmerOffset*10)%2 == 0 {
+				style = t.S().Base.Foreground(t.Primary)
+			} else {
+				style = t.S().Base.Foreground(t.Secondary)
+			}
+		} else if brightness \u003e 0.3 {
+			// Mid brightness - use blue
+			style = t.S().Base.Foreground(t.Blue)
+		} else {
+			// Dim part - use muted color
+			style = t.S().Muted
+		}
+		
+		result.WriteString(style.Render(string(r)))
+	}
+	
+	return result.String()
+}
+
+// abs returns the absolute value of a float64
+func abs(x float64) float64 {
+	if x \u003c 0 {
+		return -x
+	}
+	return x
+}
+
 func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
-	// Update placeholder
-	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-		m.textarea.Placeholder = m.workingPlaceholder
+	// Update placeholder with shimmer effect
+	if m.app.AgentCoordinator != nil \u0026\u0026 m.app.AgentCoordinator.IsBusy() {
+		m.textarea.Placeholder = m.shimmerPlaceholder(m.workingPlaceholder)
 	} else {
 		m.textarea.Placeholder = m.readyPlaceholder
 	}
