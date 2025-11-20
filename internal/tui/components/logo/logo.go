@@ -63,23 +63,70 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
-	// Add gold + to the H letter (last letter in CRUSH)
+	// Add gold + to the H letter by replacing a ▀ in the middle
 	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
 	if len(lines) >= 3 {
-		// The bottom line (index 2) contains the H
+		// Find and replace the second-to-last ▀ with a gold +
 		bottomLine := lines[2]
-		// Find the position of the H's middle section (it's the last letter)
-		// We need to find where the H starts and insert the + in its middle
-		runes := []rune(bottomLine)
-		lineLen := len(runes)
 		
-		// The H is at the end, find approximately where its middle would be
-		// Assuming roughly equal spacing, the H middle is near the end
-		// We'll insert the + about 3-4 characters from the end (in the H's middle section)
-		if lineLen > 4 {
+		// Count ▀ characters to find the right one to replace
+		count := strings.Count(ansi.Strip(bottomLine), "▀")
+		if count >= 2 {
+			// Replace the second-to-last ▀
 			goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
-			insertPos := lineLen - 3 // Position in the middle of the H's bottom section
-			lines[2] = string(runes[:insertPos]) + goldPlus + string(runes[insertPos+1:])
+			
+			// Find all positions of ▀ in the stripped version
+			stripped := ansi.Strip(bottomLine)
+			targetIdx := -1
+			currentCount := 0
+			
+			for i, r := range stripped {
+				if r == '▀' {
+					currentCount++
+					if currentCount == count-1 { // second-to-last
+						targetIdx = i
+						break
+					}
+				}
+			}
+			
+			if targetIdx >= 0 {
+				// Rebuild with the replacement at the visual position
+				result := ""
+				visualPos := 0
+				inEscape := false
+				replaced := false
+				
+				for i := 0; i < len(bottomLine); i++ {
+					ch := bottomLine[i]
+					
+					if ch == '\x1b' {
+						inEscape = true
+						result += string(ch)
+						continue
+					}
+					
+					if inEscape {
+						result += string(ch)
+						if ch == 'm' {
+							inEscape = false
+						}
+						continue
+					}
+					
+					if visualPos == targetIdx && !replaced {
+						result += goldPlus
+						replaced = true
+						visualPos++
+						continue
+					}
+					
+					result += string(ch)
+					visualPos++
+				}
+				
+				lines[2] = result
+			}
 		}
 		crush = strings.Join(lines, "\n")
 	}
