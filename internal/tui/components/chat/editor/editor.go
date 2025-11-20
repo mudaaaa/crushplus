@@ -524,7 +524,7 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 	runes := []rune(text)
 	var result strings.Builder
 	
-	// Create a sliding gradient effect across the text
+	// Create a sliding gradient effect across the text using only the primary color
 	for i, r := range runes {
 		// Calculate position in the shimmer wave (0.0 to 1.0)
 		pos := float64(i) / float64(len(runes))
@@ -539,20 +539,19 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 		// Peak brightness at wave = 0.5
 		brightness := 1.0 - 2.0*abs(wave-0.5)
 		
-		// Interpolate between muted and primary colors based on brightness
+		// Use only the primary color with varying brightness using the Darken function
 		var style lipgloss.Style
-		if brightness > 0.6 {
-			// Bright part of shimmer - use primary/secondary gradient
-			if int(m.shimmerOffset*10)%2 == 0 {
-				style = t.S().Base.Foreground(t.Primary)
-			} else {
-				style = t.S().Base.Foreground(t.Secondary)
-			}
-		} else if brightness > 0.3 {
-			// Mid brightness - use blue
-			style = t.S().Base.Foreground(t.Blue)
+		if brightness > 0.7 {
+			// Brightest part - full primary color
+			style = t.S().Base.Foreground(t.Primary)
+		} else if brightness > 0.4 {
+			// Mid brightness - slightly dimmed primary (20% darker)
+			style = t.S().Base.Foreground(styles.Darken(t.Primary, 20))
+		} else if brightness > 0.2 {
+			// Lower brightness - more dimmed primary (40% darker)
+			style = t.S().Base.Foreground(styles.Darken(t.Primary, 40))
 		} else {
-			// Dim part - use muted color
+			// Dimmest part - muted color
 			style = t.S().Muted
 		}
 		
