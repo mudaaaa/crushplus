@@ -3,6 +3,7 @@ package editor
 import (
 	"context"
 	"fmt"
+	"image/color"
 	"math/rand"
 	"net/http"
 	"os"
@@ -192,6 +193,10 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 		m.shimmerOffset += 0.05
 		if m.shimmerOffset > 1.0 {
 			m.shimmerOffset = 0.0
+		}
+		// Update the placeholder to trigger a re-render
+		if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
+			m.textarea.Placeholder = m.shimmerPlaceholder(m.workingPlaceholder)
 		}
 		return m, m.shimmerTick()
 	case tea.WindowSizeMsg:
@@ -521,13 +526,23 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 	}
 	
 	t := styles.CurrentTheme()
-	runes := []rune(text)
-	var result strings.Builder
 	
 	// Create a sliding gradient effect across the text using only the primary color
-	for i, r := range runes {
+	// We'll create segments of text with different brightness levels
+	textRunes := []rune(text)
+	if len(textRunes) == 0 {
+		return ""
+	}
+	
+	// Calculate the shimmer wave position
+	waveWidth := 0.3 // Width of the bright part of the wave
+	
+	var segments []string
+	segmentStart := 0
+	
+	for i := 0; i < len(textRunes); i++ {
 		// Calculate position in the shimmer wave (0.0 to 1.0)
-		pos := float64(i) / float64(len(runes))
+		pos := float64(i) / float64(len(textRunes))
 		
 		// Create a wave that moves with shimmerOffset
 		wave := pos - m.shimmerOffset
@@ -535,30 +550,99 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 			wave += 1.0
 		}
 		
-		// Use a smooth gradient from muted to primary and back
-		// Peak brightness at wave = 0.5
+		// Calculate brightness based on wave position
 		brightness := 1.0 - 2.0*abs(wave-0.5)
 		
-		// Use only the primary color with varying brightness using the Darken function
-		var style lipgloss.Style
+		var currentColor color.Color
 		if brightness > 0.7 {
 			// Brightest part - full primary color
-			style = t.S().Base.Foreground(t.Primary)
+			currentColor = t.Primary
 		} else if brightness > 0.4 {
 			// Mid brightness - slightly dimmed primary (20% darker)
-			style = t.S().Base.Foreground(styles.Darken(t.Primary, 20))
+			currentColor = styles.Darken(t.Primary, 20)
 		} else if brightness > 0.2 {
 			// Lower brightness - more dimmed primary (40% darker)
-			style = t.S().Base.Foreground(styles.Darken(t.Primary, 40))
+			currentColor = styles.Darken(t.Primary, 40)
 		} else {
 			// Dimmest part - muted color
-			style = t.S().Muted
+			currentColor = t.FgMuted
 		}
 		
-		result.WriteString(style.Render(string(r)))
+		// Check if we need to start a new segment (color change)
+		if i > 0 {
+			// Get the previous color
+			prevPos := float64(i-1) / float64(len(textRunes))
+			prevWave := prevPos - m.shimmerOffset
+			if prevWave < 0 {
+				prevWave += 1.0
+			}
+			prevBrightness := 1.0 - 2.0*abs(prevWave-0.5)
+			
+			var prevColor color.Color
+			if prevBrightness > 0.7 {
+				prevColor = t.Primary
+			} else if prevBrightness > 0.4 {
+				prevColor = styles.Darken(t.Primary, 20)
+			} else if prevBrightness > 0.2 {
+				prevColor = styles.Darken(t.Primary, 40)
+			} else {
+				prevColor = t.FgMuted
+			}
+			
+			// If color changed, close the previous segment and start a new one
+			if !colorsEqual(prevColor, currentColor) {
+				segment := string(textRunes[segmentStart:i])
+				if segment != "" {
+					style := t.S().Base.Foreground(prevColor)
+					segments = append(segments, style.Render(segment))
+				}
+				segmentStart = i
+			}
+		}
+	}
+	
+	// Add the final segment
+	if segmentStart < len(textRunes) {
+		segment := string(textRunes[segmentStart:])
+		if segment != "" {
+			// Calculate the color for the final segment
+			pos := float64(segmentStart) / float64(len(textRunes))
+			wave := pos - m.shimmerOffset
+			if wave < 0 {
+				wave += 1.0
+			}
+			brightness := 1.0 - 2.0*abs(wave-0.5)
+			
+			var finalColor color.Color
+			if brightness > 0.7 {
+				finalColor = t.Primary
+			} else if brightness > 0.4 {
+				finalColor = styles.Darken(t.Primary, 20)
+			} else if brightness > 0.2 {
+				finalColor = styles.Darken(t.Primary, 40)
+			} else {
+				finalColor = t.FgMuted
+			}
+			
+			style := t.S().Base.Foreground(finalColor)
+			segments = append(segments, style.Render(segment))
+		}
+	}
+	
+	// Join all segments
+	var result strings.Builder
+	for _, segment := range segments {
+		result.WriteString(segment)
 	}
 	
 	return result.String()
+}
+
+// colorsEqual checks if two colors are equal
+func colorsEqual(c1, c2 color.Color) bool {
+	r1, g1, b1, _ := c1.RGBA()
+	r2, g2, b2, _ := c2.RGBA()
+	return r1 == r2 && g1 == g2 && b1 == b2
 }
 
 // abs returns the absolute value of a float64
