@@ -136,15 +136,17 @@ func NewViewTool(lspClients *csync.Map[string, *lsp.Client], permissions permiss
 				return fantasy.NewTextErrorResponse(fmt.Sprintf("Path is a directory, not a file: %s", filePath)), nil
 			}
 
-			// Check file size
-			if fileInfo.Size() > MaxReadSize {
-				return fantasy.NewTextErrorResponse(fmt.Sprintf("File is too large (%d bytes). Maximum size is %d bytes",
-					fileInfo.Size(), MaxReadSize)), nil
-			}
-
 			// Set default limit if not provided
 			if params.Limit <= 0 {
 				params.Limit = DefaultReadLimit
+			}
+
+			// Check file size
+			if fileInfo.Size() > MaxReadSize {
+				if params.Limit > 150 {
+					return fantasy.NewTextErrorResponse(fmt.Sprintf("File is too large (%d bytes). For files larger than %d bytes, the read limit is restricted to 150 lines. Please set 'limit' to 150 or less.",
+						fileInfo.Size(), MaxReadSize)), nil
+				}
 			}
 
 			// Check if it's an image file
@@ -251,8 +253,8 @@ func readTextFile(filePath string, offset, limit int) (string, int, error) {
 		lines = append(lines, lineText)
 	}
 
-	// Continue scanning to get total line count
-	for scanner.Scan() {
+	// Check if there are more lines
+	if scanner.Scan() {
 		lineCount++
 	}
 
