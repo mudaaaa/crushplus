@@ -11,6 +11,7 @@ import (
 	"runtime"
 	"slices"
 	"strings"
+	"time"
 	"unicode"
 
 	"charm.land/bubbles/v2/key"
@@ -60,6 +61,8 @@ type editorCmp struct {
 	deleteMode         bool
 	readyPlaceholder   string
 	workingPlaceholder string
+	placeholderFrame   int // Animation frame (0-3)
+	placeholderTimer   *time.Ticker // Timer for animation
 
 	keyMap EditorKeyMap
 
@@ -176,6 +179,15 @@ func (m *editorCmp) repositionCompletions() tea.Msg {
 func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	var cmds []tea.Cmd
+
+	// Handle animation tick
+	if tick, ok := msg.(tea.TickMsg); ok && m.placeholderTimer != nil && tick.ID == m.placeholderTimer {
+		m.placeholderFrame++
+		return m, tea.Tick(time.Second/2, func(time.Time) tea.Msg {
+			return tick
+		})
+	}
+
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		return m, m.repositionCompletions
@@ -496,9 +508,17 @@ func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
 	// Set placeholder based on agent state
 	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-		m.textarea.Placeholder = m.workingPlaceholder
+		// Animate the ellipsis for working placeholders
+		baseText := strings.TrimSuffix(m.workingPlaceholder, "...")
+		dots := strings.Repeat(".", m.placeholderFrame%4)
+		m.textarea.Placeholder = baseText + dots
 	} else {
 		m.textarea.Placeholder = m.readyPlaceholder
+		// Stop animation timer if running
+		if m.placeholderTimer != nil {
+			m.placeholderTimer.Stop()
+			m.placeholderTimer = nil
+		}
 	}
 	if m.app.Permissions.SkipRequests() {
 		m.textarea.Placeholder = "Yolo mode!"
