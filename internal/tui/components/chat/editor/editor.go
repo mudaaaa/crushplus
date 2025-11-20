@@ -542,11 +542,9 @@ func (m *editorCmp) View() string {
 	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() && m.textarea.Value() == "" {
 		// Create animated placeholder manually
 		placeholderText := m.workingPlaceholder + m.shimmerDots()
-		// Replace the empty textarea content with our animated placeholder
-		if textareaContent == "\n" { // Empty textarea typically renders as just a newline
-			placeholderStyle := lipgloss.NewStyle().Foreground(t.FgMuted)
-			textareaContent = placeholderStyle.Render(placeholderText) + "\n"
-		}
+		// Always render the placeholder when textarea is empty and agent is busy
+		placeholderStyle := lipgloss.NewStyle().Foreground(t.FgMuted)
+		textareaContent = placeholderStyle.Render(placeholderText) + "\n"
 	}
 	
 	if len(m.attachments) == 0 {
