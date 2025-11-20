@@ -4,10 +4,12 @@ import (
 	"bufio"
 	"context"
 	_ "embed"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 	"unicode/utf8"
 
@@ -56,6 +58,31 @@ func NewViewTool(lspClients *csync.Map[string, *lsp.Client], permissions permiss
 		ViewToolName,
 		string(viewDescription),
 		func(ctx context.Context, params ViewParams, call fantasy.ToolCall) (fantasy.ToolResponse, error) {
+			// Handle string-to-int conversion for parameters if needed
+			var rawParams map[string]interface{}
+			if err := json.Unmarshal([]byte(call.Input), &rawParams); err == nil {
+				if val, ok := rawParams["offset"]; ok {
+					switch v := val.(type) {
+					case string:
+						if i, err := strconv.Atoi(v); err == nil {
+							params.Offset = i
+						}
+					case float64:
+						params.Offset = int(v)
+					}
+				}
+				if val, ok := rawParams["limit"]; ok {
+					switch v := val.(type) {
+					case string:
+						if i, err := strconv.Atoi(v); err == nil {
+							params.Limit = i
+						}
+					case float64:
+						params.Limit = int(v)
+					}
+				}
+			}
+
 			if params.FilePath == "" {
 				return fantasy.NewTextErrorResponse("file_path is required"), nil
 			}

@@ -38,6 +38,6 @@ Reads and displays file contents with line numbers for examining code, logs, or 
 - Use with Glob to find files first
 - For code exploration: Grep to find relevant files, then View to examine
 - For large files: use offset parameter for specific sections
-- IMPORTANT: offset and limit must be integers, not strings (e.g., use offset=100, not offset="100")
-- When using the tool programmatically, ensure numeric parameters are passed as numbers, not quoted strings
+- The tool now accepts both integers and strings for offset/limit parameters (e.g., both offset=100 and offset="100" work)
+- When using the tool programmatically, numeric parameters can be passed as either numbers or quoted strings
 </tips>
