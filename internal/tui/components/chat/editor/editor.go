@@ -535,8 +535,13 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 
 func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
-	// Only update placeholder when not busy (busy placeholder is updated by shimmer tick)
-	if m.app.AgentCoordinator == nil || !m.app.AgentCoordinator.IsBusy() {
+	// Set placeholder based on agent state
+	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
+		// Initialize the working placeholder if not already set
+		if m.textarea.Placeholder == m.readyPlaceholder || m.textarea.Placeholder == "" {
+			m.textarea.Placeholder = m.shimmerPlaceholder(m.workingPlaceholder)
+		}
+	} else {
 		m.textarea.Placeholder = m.readyPlaceholder
 	}
 	if m.app.Permissions.SkipRequests() {
