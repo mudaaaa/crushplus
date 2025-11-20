@@ -1,15 +1,47 @@
-Launch a new agent that has access to the following tools: GlobTool, GrepTool, LS, View. When you are searching for a keyword or file and are not confident that you will find the right match on the first try, use the Agent tool to perform the search for you.
+Launch a specialized Sub-Agent to perform autonomous reconnaissance, code navigation, and information retrieval. This tool is your primary mechanism for **Parallel Intelligence Gathering**.
 
-<usage>
-- If you are searching for a keyword like "config" or "logger", or for questions like "which file does X?", the Agent tool is strongly recommended
-- If you want to read a specific file path, use the View or GlobTool tool instead of the Agent tool, to find the match more quickly
-- If you are searching for a specific class definition like "class Foo", use the GlobTool tool instead, to find the match more quickly
-</usage>
+<capabilities>
+The Sub-Agent has access to read-only tools: `GlobTool`, `GrepTool`, `LS`, and `View`.
+It CANNOT modify files (No Bash, Edit, or Replace).
+It IS stateless (one-shot execution).
+</capabilities>
 
-<usage_notes>
-1. Launch multiple agents concurrently whenever possible, to maximize performance; to do that, use a single message with multiple tool uses
-2. When the agent is done, it will return a single message back to you. The result returned by the agent is not visible to the user. To show the user the result, you should send a text message back to the user with a concise summary of the result.
-3. Each agent invocation is stateless. You will not be able to send additional messages to the agent, nor will the agent be able to communicate with you outside of its final report. Therefore, your prompt should contain a highly detailed task description for the agent to perform autonomously and you should specify exactly what information the agent should return back to you in its final and only message to you.
-4. The agent's outputs should generally be trusted
-5. IMPORTANT: The agent can not use Bash, Replace, Edit, so can not modify files. If you want to use these tools, use them directly instead of going through the agent.
-</usage_notes>
+<strategic_usage>
+**AGGRESSIVE PARALLELISM**: You are expected to launch *multiple* sub-agents simultaneously to solve complex problems faster. Do not serialize tasks that can be parallelized.
+
+**When to use a Sub-Agent:**
+1.  **Exploration**: "I need to understand how the `Auth` module works." -> Launch Agent.
+2.  **Broad Search**: "Where is `UserID` defined and where is it used?" -> Launch Agent.
+3.  **Multi-Vector Investigation**:
+    *   *Task*: "Refactor the API and the Database."
+    *   *Action*: Launch Agent A ("Map all API endpoints") AND Launch Agent B ("Find all DB schema definitions") simultaneously.
+4.  **Verification**: "Check if `config.json` or `.env` exists and what keys are in them." -> Launch Agent.
+
+**When NOT to use a Sub-Agent:**
+*   You know the exact file path and just need to read it (Use `View`).
+*   You need to run a terminal command (Use `RunCommand`).
+*   You need to edit code (Do it yourself).
+</strategic_usage>
+
+<prompting_protocol>
+Because the Sub-Agent is stateless, your instructions to it must be **comprehensive** and **self-contained**.
+
+**Template for Sub-Agent Instructions:**
+1.  **Context**: Why are we looking for this? (e.g., "We are refactoring the login flow.")
+2.  **Task**: Specific instructions. (e.g., "Find the `Login` function and any helper functions it calls in `auth.go`.")
+3.  **Output Requirement**: What do you need back? (e.g., "Return the file paths and line numbers of the function definitions.")
+
+**Example of Efficient Parallel Usage:**
+*User Request*: "Fix the bug in the payment processing and update the user profile schema."
+*Your Action*:
+    *   `Call Tool: Agent(Task="Locate the payment processing logic and search for recent error logs or TODOs related to payments.")`
+    *   `Call Tool: Agent(Task="Find the User Profile schema definition and all references to 'Profile' in the database layer.")`
+    *   *Wait for both to return, then synthesize a plan.*
+</prompting_protocol>
+
+<operational_rules>
+1.  **Batching**: Always send multiple agent requests in a single turn if the tasks are independent.
+2.  **Trust**: The Sub-Agent's output is reliable. Use it to inform your next edit.
+3.  **Visibility**: The user does NOT see the Sub-Agent's internal steps. You MUST summarize the findings in your final response to the user.
+4.  **Scope**: Do not ask the Sub-Agent to edit files. It will fail. Use it to *find* the code, then *you* edit it.
+</operational_rules>
