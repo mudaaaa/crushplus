@@ -190,7 +190,7 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	case shimmerTickMsg:
 		// Update shimmer offset for placeholder animation
 		m.shimmerOffset += 0.05
-		if m.shimmerOffset \u003e 1.0 {
+		if m.shimmerOffset > 1.0 {
 			m.shimmerOffset = 0.0
 		}
 		return m, m.shimmerTick()
@@ -416,7 +416,7 @@ func (m *editorCmp) Cursor() *tea.Cursor {
 }
 
 var readyPlaceholders = [...]string{
-	"Awaiting Instructions..."
+	"Awaiting Instructions...",
 }
 
 var workingPlaceholders = [...]string{
@@ -531,7 +531,7 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 		
 		// Create a wave that moves with shimmerOffset
 		wave := pos - m.shimmerOffset
-		if wave \u003c 0 {
+		if wave < 0 {
 			wave += 1.0
 		}
 		
@@ -541,15 +541,14 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 		
 		// Interpolate between muted and primary colors based on brightness
 		var style lipgloss.Style
-		if brightness \u003e 0.6 {
+		if brightness > 0.6 {
 			// Bright part of shimmer - use primary/secondary gradient
-			gradPos := (brightness - 0.6) / 0.4
 			if int(m.shimmerOffset*10)%2 == 0 {
 				style = t.S().Base.Foreground(t.Primary)
 			} else {
 				style = t.S().Base.Foreground(t.Secondary)
 			}
-		} else if brightness \u003e 0.3 {
+		} else if brightness > 0.3 {
 			// Mid brightness - use blue
 			style = t.S().Base.Foreground(t.Blue)
 		} else {
@@ -565,7 +564,7 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 
 // abs returns the absolute value of a float64
 func abs(x float64) float64 {
-	if x \u003c 0 {
+	if x < 0 {
 		return -x
 	}
 	return x
@@ -574,7 +573,7 @@ func abs(x float64) float64 {
 func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
 	// Update placeholder with shimmer effect
-	if m.app.AgentCoordinator != nil \u0026\u0026 m.app.AgentCoordinator.IsBusy() {
+	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
 		m.textarea.Placeholder = m.shimmerPlaceholder(m.workingPlaceholder)
 	} else {
 		m.textarea.Placeholder = m.readyPlaceholder
