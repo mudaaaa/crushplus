@@ -187,9 +187,22 @@ func (m *messageCmp) renderAssistantMessage() string {
 	finishedData := m.message.FinishPart()
 	thinkingContent := ""
 
+	// Check for active tool calls
+	hasActiveToolCalls := false
+	for _, tc := range m.message.ToolCalls() {
+		if !tc.Finished {
+			hasActiveToolCalls = true
+			break
+		}
+	}
+
 	if thinking || strings.TrimSpace(m.message.ReasoningContent().Thinking) != "" {
 		m.anim.SetLabel("Thinking")
 		thinkingContent = m.renderThinkingContent()
+	} else if hasActiveToolCalls {
+		// Show tool call indicator
+		m.anim.SetLabel("Using tools")
+		parts = append(parts, m.style().PaddingLeft(1).Render(m.anim.View()))
 	} else if finished && content == "" && finishedData.Reason == message.FinishReasonEndTurn {
 		content = ""
 	} else if finished && content == "" && finishedData.Reason == message.FinishReasonCanceled {
@@ -322,6 +335,13 @@ func (m *messageCmp) shouldSpin() bool {
 
 	if m.message.IsFinished() {
 		return false
+	}
+
+	// Check for active tool calls
+	for _, tc := range m.message.ToolCalls() {
+		if !tc.Finished {
+			return true
+		}
 	}
 
 	if strings.TrimSpace(m.message.Content().Text) != "" {
