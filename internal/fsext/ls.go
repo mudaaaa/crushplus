@@ -72,6 +72,7 @@ var commonIgnorePatterns = sync.OnceValue(func() ignore.IgnoreParser {
 
 		// Crush
 		".crush",
+		".crushplus",
 
 		// macOS stuff
 		"OrbStack",
