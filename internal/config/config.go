@@ -19,7 +19,7 @@ import (
 )
 
 const (
-	appName              = "crush"
+	appName              = "crushplus"
 	defaultDataDirectory = ".crush"
 	defaultInitializeAs  = "AGENTS.md"
 )

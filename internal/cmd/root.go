@@ -47,32 +47,32 @@ func init() {
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "crush",
+	Use:   "crushplus",
 	Short: "Terminal-based AI assistant for software development",
 	Long: `Crush is a powerful terminal-based AI assistant that helps with software development tasks.
 It provides an interactive chat interface with AI capabilities, code analysis, and LSP integration
 to assist developers in writing, debugging, and understanding code directly from the terminal.`,
 	Example: `
 # Run in interactive mode
-crush
+crushplus
 
 # Run with debug logging
-crush -d
+crushplus -d
 
 # Run with debug logging in a specific directory
-crush -d -c /path/to/project
+crushplus -d -c /path/to/project
 
 # Run with custom data directory
-crush -D /path/to/custom/.crush
+crushplus -D /path/to/custom/.crush
 
 # Print version
-crush -v
+crushplus -v
 
 # Run a single non-interactive prompt
-crush run "Explain the use of context in Go"
+crushplus run "Explain the use of context in Go"
 
 # Run in dangerous mode (auto-accept all permissions)
-crush -y
+crushplus -y
   `,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		app, err := setupAppWithProgressBar(cmd)
