@@ -1,4 +1,22 @@
-# Crush
+# CrushPlus
+
+## Recent Updates (Changelog)
+
+### UI & Animations
+- Added animated placeholders and working indicators
+- Improved dot animations and shimmer effects
+- Enhanced TUI rendering performance
+
+### Tooling & Features
+- Improved `view` tool calling
+- Enhanced prompt handling and streaming
+- Added tool use streaming indicators
+
+### Fixes & Improvements
+- Fixed Unicode rendering issues
+- Added support for reading large files (150-line limit)
+- Resolved various animation and rendering bugs
+- Updated all references to `crushplus` repository
 
 <p align="center">
     <a href="https://stuff.charm.sh/crush/charm-crush.png"><img width="450" alt="Charm Crush Logo" src="https://github.com/user-attachments/assets/adc1a6f4-b284-4603-836c-59038caa2e8b" /></a><br />
