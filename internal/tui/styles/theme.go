@@ -13,7 +13,6 @@ import (
 	"charm.land/lipgloss/v2"
 	"github.com/charmbracelet/crush/internal/tui/exp/diffview"
 	"github.com/charmbracelet/glamour/v2/ansi"
-	"github.com/charmbracelet/x/exp/charmtone"
 	"github.com/lucasb-eyer/go-colorful"
 	"github.com/rivo/uniseg"
 )
@@ -215,7 +214,7 @@ func (t *Theme) buildStyles() *Styles {
 				StylePrimitive: ansi.StylePrimitive{
 					// BlockPrefix: "\n",
 					// BlockSuffix: "\n",
-					Color: stringPtr(charmtone.Smoke.Hex()),
+					Color: stringPtr(ColorToHex(t.FgHalfMuted)),
 				},
 				// Margin: uintPtr(defaultMargin),
 			},
@@ -230,7 +229,7 @@ func (t *Theme) buildStyles() *Styles {
 			Heading: ansi.StyleBlock{
 				StylePrimitive: ansi.StylePrimitive{
 					BlockSuffix: "\n",
-					Color:       stringPtr(charmtone.Malibu.Hex()),
+					Color:       stringPtr(ColorToHex(t.Blue)),
 					Bold:        boolPtr(true),
 				},
 			},
@@ -238,8 +237,8 @@ func (t *Theme) buildStyles() *Styles {
 				StylePrimitive: ansi.StylePrimitive{
 					Prefix:          " ",
 					Suffix:          " ",
-					Color:           stringPtr(charmtone.Zest.Hex()),
-					BackgroundColor: stringPtr(charmtone.Charple.Hex()),
+					Color:           stringPtr(ColorToHex(t.Accent)),
+					BackgroundColor: stringPtr(ColorToHex(t.Primary)),
 					Bold:            boolPtr(true),
 				},
 			},
@@ -266,7 +265,7 @@ func (t *Theme) buildStyles() *Styles {
 			H6: ansi.StyleBlock{
 				StylePrimitive: ansi.StylePrimitive{
 					Prefix: "###### ",
-					Color:  stringPtr(charmtone.Guac.Hex()),
+					Color:  stringPtr(ColorToHex(t.Success)),
 					Bold:   boolPtr(false),
 				},
 			},
@@ -280,7 +279,7 @@ func (t *Theme) buildStyles() *Styles {
 				Bold: boolPtr(true),
 			},
 			HorizontalRule: ansi.StylePrimitive{
-				Color:  stringPtr(charmtone.Charcoal.Hex()),
+				Color:  stringPtr(ColorToHex(t.Border)),
 				Format: "\n--------\n",
 			},
 			Item: ansi.StylePrimitive{
@@ -295,117 +294,117 @@ func (t *Theme) buildStyles() *Styles {
 				Unticked:       "[ ] ",
 			},
 			Link: ansi.StylePrimitive{
-				Color:     stringPtr(charmtone.Zinc.Hex()),
+				Color:     stringPtr(ColorToHex(t.BlueLight)),
 				Underline: boolPtr(true),
 			},
 			LinkText: ansi.StylePrimitive{
-				Color: stringPtr(charmtone.Guac.Hex()),
+				Color: stringPtr(ColorToHex(t.Success)),
 				Bold:  boolPtr(true),
 			},
 			Image: ansi.StylePrimitive{
-				Color:     stringPtr(charmtone.Cheeky.Hex()),
+				Color:     stringPtr(ColorToHex(t.Accent)),
 				Underline: boolPtr(true),
 			},
 			ImageText: ansi.StylePrimitive{
-				Color:  stringPtr(charmtone.Squid.Hex()),
+				Color:  stringPtr(ColorToHex(t.FgMuted)),
 				Format: "Image: {{.text}} →",
 			},
 			Code: ansi.StyleBlock{
 				StylePrimitive: ansi.StylePrimitive{
 					Prefix:          " ",
 					Suffix:          " ",
-					Color:           stringPtr(charmtone.Coral.Hex()),
-					BackgroundColor: stringPtr(charmtone.Charcoal.Hex()),
+					Color:           stringPtr(ColorToHex(t.Red)),
+					BackgroundColor: stringPtr(ColorToHex(t.BgSubtle)),
 				},
 			},
 			CodeBlock: ansi.StyleCodeBlock{
 				StyleBlock: ansi.StyleBlock{
 					StylePrimitive: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Charcoal.Hex()),
+						Color: stringPtr(ColorToHex(t.BgSubtle)),
 					},
 					Margin: uintPtr(defaultMargin),
 				},
 				Chroma: &ansi.Chroma{
 					Text: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Smoke.Hex()),
+						Color: stringPtr(ColorToHex(t.FgBase)),
 					},
 					Error: ansi.StylePrimitive{
-						Color:           stringPtr(charmtone.Butter.Hex()),
-						BackgroundColor: stringPtr(charmtone.Sriracha.Hex()),
+						Color:           stringPtr(ColorToHex(t.White)),
+						BackgroundColor: stringPtr(ColorToHex(t.Error)),
 					},
 					Comment: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Oyster.Hex()),
+						Color: stringPtr(ColorToHex(t.FgSubtle)),
 					},
 					CommentPreproc: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Bengal.Hex()),
+						Color: stringPtr(ColorToHex(t.Warning)),
 					},
 					Keyword: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Malibu.Hex()),
+						Color: stringPtr(ColorToHex(t.Blue)),
 					},
 					KeywordReserved: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Pony.Hex()),
+						Color: stringPtr(ColorToHex(t.Secondary)),
 					},
 					KeywordNamespace: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Pony.Hex()),
+						Color: stringPtr(ColorToHex(t.Secondary)),
 					},
 					KeywordType: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Guppy.Hex()),
+						Color: stringPtr(ColorToHex(t.Tertiary)),
 					},
 					Operator: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Salmon.Hex()),
+						Color: stringPtr(ColorToHex(t.RedLight)),
 					},
 					Punctuation: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Zest.Hex()),
+						Color: stringPtr(ColorToHex(t.Accent)),
 					},
 					Name: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Smoke.Hex()),
+						Color: stringPtr(ColorToHex(t.FgBase)),
 					},
 					NameBuiltin: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Cheeky.Hex()),
+						Color: stringPtr(ColorToHex(t.Accent)),
 					},
 					NameTag: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Mauve.Hex()),
+						Color: stringPtr(ColorToHex(t.Secondary)),
 					},
 					NameAttribute: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Hazy.Hex()),
+						Color: stringPtr(ColorToHex(t.BlueLight)),
 					},
 					NameClass: ansi.StylePrimitive{
-						Color:     stringPtr(charmtone.Salt.Hex()),
+						Color:     stringPtr(ColorToHex(t.FgSelected)),
 						Underline: boolPtr(true),
 						Bold:      boolPtr(true),
 					},
 					NameDecorator: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Citron.Hex()),
+						Color: stringPtr(ColorToHex(t.Citron)),
 					},
 					NameFunction: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Guac.Hex()),
+						Color: stringPtr(ColorToHex(t.Success)),
 					},
 					LiteralNumber: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Julep.Hex()),
+						Color: stringPtr(ColorToHex(t.Green)),
 					},
 					LiteralString: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Cumin.Hex()),
+						Color: stringPtr(ColorToHex(t.Yellow)),
 					},
 					LiteralStringEscape: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Bok.Hex()),
+						Color: stringPtr(ColorToHex(t.GreenLight)),
 					},
 					GenericDeleted: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Coral.Hex()),
+						Color: stringPtr(ColorToHex(t.Red)),
 					},
 					GenericEmph: ansi.StylePrimitive{
 						Italic: boolPtr(true),
 					},
 					GenericInserted: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Guac.Hex()),
+						Color: stringPtr(ColorToHex(t.Success)),
 					},
 					GenericStrong: ansi.StylePrimitive{
 						Bold: boolPtr(true),
 					},
 					GenericSubheading: ansi.StylePrimitive{
-						Color: stringPtr(charmtone.Squid.Hex()),
+						Color: stringPtr(ColorToHex(t.FgMuted)),
 					},
 					Background: ansi.StylePrimitive{
-						BackgroundColor: stringPtr(charmtone.Charcoal.Hex()),
+						BackgroundColor: stringPtr(ColorToHex(t.BgSubtle)),
 					},
 				},
 			},
@@ -519,7 +518,7 @@ func NewManager() *Manager {
 		themes: make(map[string]*Theme),
 	}
 
-	t := NewCharmtoneTheme() // default theme
+	t := NewMagmaTheme() // default theme
 	m.Register(t)
 	m.current = m.themes[t.Name]
 
@@ -548,6 +547,13 @@ func (m *Manager) List() []string {
 		names = append(names, name)
 	}
 	return names
+}
+
+// ColorToHex converts a lipgloss.Color to a hex string
+// ColorToHex converts a lipgloss.Color to a hex string
+func ColorToHex(c color.Color) string {
+	r, g, b, _ := c.RGBA()
+	return fmt.Sprintf("#%02x%02x%02x", r>>8, g>>8, b>>8)
 }
 
 // ParseHex converts hex string to color
