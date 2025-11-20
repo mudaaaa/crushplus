@@ -193,6 +193,7 @@ func (a *sessionAgent) Run(ctx context.Context, call SessionAgentCall) (*fantasy
 
 	var currentAssistant *message.Message
 	var shouldSummarize bool
+	isThinking := false
 	result, err := agent.Stream(genCtx, fantasy.AgentStreamCall{
 		Prompt:           call.Prompt,
 		Files:            files,
@@ -292,7 +293,32 @@ func (a *sessionAgent) Run(ctx context.Context, call SessionAgentCall) (*fantasy
 				text = strings.TrimPrefix(text, "\n")
 			}
 
-			currentAssistant.AppendContent(text)
+			if strings.Contains(text, "<think>") {
+				isThinking = true
+				parts := strings.SplitN(text, "<think>", 2)
+				if len(parts[0]) > 0 {
+					currentAssistant.AppendContent(parts[0])
+				}
+				text = parts[1]
+			}
+
+			if strings.Contains(text, "</think>") {
+				parts := strings.SplitN(text, "</think>", 2)
+				currentAssistant.AppendReasoningContent(parts[0])
+				isThinking = false
+				currentAssistant.FinishThinking()
+				text = parts[1]
+				if len(text) > 0 {
+					currentAssistant.AppendContent(text)
+				}
+				return a.messages.Update(genCtx, *currentAssistant)
+			}
+
+			if isThinking {
+				currentAssistant.AppendReasoningContent(text)
+			} else {
+				currentAssistant.AppendContent(text)
+			}
 			return a.messages.Update(genCtx, *currentAssistant)
 		},
 		OnToolInputStart: func(id string, toolName string) error {
