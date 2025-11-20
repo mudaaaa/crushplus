@@ -180,12 +180,9 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	var cmds []tea.Cmd
 
-	// Handle animation tick
-	if tick, ok := msg.(tea.TickMsg); ok && m.placeholderTimer != nil && tick.ID == m.placeholderTimer {
-		m.placeholderFrame++
-		return m, tea.Tick(time.Second/2, func(time.Time) tea.Msg {
-			return tick
-		})
+	// Handle animation frame update
+	if m.placeholderTimer != nil {
+		m.placeholderFrame = int(time.Now().UnixNano()/500000000) % 4
 	}
 
 	switch msg := msg.(type) {
