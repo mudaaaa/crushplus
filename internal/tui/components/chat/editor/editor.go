@@ -181,8 +181,12 @@ func (m *editorCmp) Update(msg tea.Msg) (util.Model, tea.Cmd) {
 	var cmds []tea.Cmd
 
 	// Handle animation frame update
-	if m.placeholderTimer != nil {
-		m.placeholderFrame = int(time.Now().UnixNano()/500000000) % 4
+	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
+		now := time.Now()
+		if now.Sub(m.lastAnimationTime) >= 500*time.Millisecond {
+			m.placeholderFrame = (m.placeholderFrame + 1) % 4
+			m.lastAnimationTime = now
+		}
 	}
 
 	switch msg := msg.(type) {
