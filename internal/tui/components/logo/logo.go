@@ -212,13 +212,15 @@ func letterH(stretch bool) string {
 	
 	// Insert the gold + in the middle of the bottom line
 	lines := strings.Split(middlePart, "\n")
-	if len(lines) >= 3 {
+	if len(lines) >= 3 && len(lines[2]) > 0 {
 		bottomLine := lines[2]
 		// Find the middle position
-		midPos := len(bottomLine) / 2
-		if midPos > 0 {
+		runes := []rune(bottomLine)
+		midPos := len(runes) / 2
+		if midPos > 0 && midPos < len(runes) {
 			goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
-			lines[2] = bottomLine[:midPos] + goldPlus + bottomLine[midPos+1:]
+			// Replace the middle character with the gold +
+			lines[2] = string(runes[:midPos]) + goldPlus + string(runes[midPos+1:])
 		}
 		middlePart = strings.Join(lines, "\n")
 	}
