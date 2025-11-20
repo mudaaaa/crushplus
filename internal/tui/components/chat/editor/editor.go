@@ -3,7 +3,6 @@ package editor
 import (
 	"context"
 	"fmt"
-	"image/color"
 	"math/rand"
 	"net/http"
 	"os"
@@ -536,10 +535,8 @@ func (m *editorCmp) shimmerPlaceholder(text string) string {
 
 func (m *editorCmp) View() string {
 	t := styles.CurrentTheme()
-	// Update placeholder with shimmer effect
-	if m.app.AgentCoordinator != nil && m.app.AgentCoordinator.IsBusy() {
-		m.textarea.Placeholder = m.shimmerPlaceholder(m.workingPlaceholder)
-	} else {
+	// Only update placeholder when not busy (busy placeholder is updated by shimmer tick)
+	if m.app.AgentCoordinator == nil || !m.app.AgentCoordinator.IsBusy() {
 		m.textarea.Placeholder = m.readyPlaceholder
 	}
 	if m.app.Permissions.SkipRequests() {
