@@ -11,7 +11,6 @@ import (
 	"runtime"
 	"slices"
 	"strings"
-	"time"
 	"unicode"
 
 	"charm.land/bubbles/v2/key"
