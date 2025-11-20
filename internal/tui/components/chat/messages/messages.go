@@ -201,7 +201,7 @@ func (m *messageCmp) renderAssistantMessage() string {
 		thinkingContent = m.renderThinkingContent()
 	} else if hasActiveToolCalls {
 		// Show tool call indicator
-		m.anim.SetLabel("Using tools")
+		m.anim.SetLabel(" Tooling...")
 		parts = append(parts, m.style().PaddingLeft(1).Render(m.anim.View()))
 	} else if finished && content == "" && finishedData.Reason == message.FinishReasonEndTurn {
 		content = ""
