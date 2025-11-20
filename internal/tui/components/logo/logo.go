@@ -63,35 +63,39 @@ func Render(version string, compact bool, o Opts) string {
 	}
 	crush = b.String()
 
-	// Add gold + at the bottom-left corner of the C
+	// Add gold + by replacing the first space on the bottom line
 	lines := strings.Split(strings.TrimRight(crush, "\n"), "\n")
 	if len(lines) >= 3 {
 		bottomLine := lines[2]
 		goldPlus := lipgloss.NewStyle().Foreground(lipgloss.Color("#FFD700")).Render("+")
 		
-		// Insert after the first visible character (the bottom-left of C)
-		// Find the first non-ANSI character
-		insertPos := 0
+		// Find and replace the first space character
+		result := ""
 		inEscape := false
-		foundFirst := false
+		replaced := false
 		
 		for i := 0; i < len(bottomLine); i++ {
 			ch := bottomLine[i]
 			
 			if ch == '\x1b' {
 				inEscape = true
-			} else if inEscape && ch == 'm' {
-				inEscape = false
-			} else if !inEscape && !foundFirst {
-				// Found first visible character, insert after it
-				insertPos = i + 1
-				foundFirst = true
-				break
+				result += string(ch)
+			} else if inEscape {
+				result += string(ch)
+				if ch == 'm' {
+					inEscape = false
+				}
+			} else if !replaced && ch == ' ' {
+				// Replace first space with gold +
+				result += goldPlus
+				replaced = true
+			} else {
+				result += string(ch)
 			}
 		}
 		
-		if foundFirst && insertPos < len(bottomLine) {
-			lines[2] = bottomLine[:insertPos] + goldPlus + bottomLine[insertPos:]
+		if replaced {
+			lines[2] = result
 		}
 		crush = strings.Join(lines, "\n")
 	}
