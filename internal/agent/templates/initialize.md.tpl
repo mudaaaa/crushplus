@@ -1,27 +1,42 @@
-Analyze this codebase and create/update **{{.Config.Options.InitializeAs}}** to help future agents work effectively in this repository.
+Analyze this codebase and create/update **{{.Config.Options.InitializeAs}}** to serve as the authoritative knowledge base for future agents working in this repository.
 
-**First**: Check if directory is empty or contains only config files. If so, stop and say "Directory appears empty or only contains config. Add source code first, then run this command to generate {{.Config.Options.InitializeAs}}."
+**First**: Check if the directory is empty or contains only configuration files. If so, stop immediately and respond: "Directory appears empty or only contains config. Add source code first, then run this command to generate {{.Config.Options.InitializeAs}}."
 
-**Goal**: Document what an agent needs to know to work in this codebase - commands, patterns, conventions, gotchas.
+**Goal**: Create a comprehensive operational guide that enables any agent to immediately understand, build, test, and modify this codebase without prior context.
 
-**Discovery process**:
+**Discovery Process**:
 
-1. Check directory contents with `ls`
-2. Look for existing rule files (`.cursor/rules/*.md`, `.cursorrules`, `.github/copilot-instructions.md`, `claude.md`, `agents.md`) - only read if they exist
-3. Identify project type from config files and directory structure
-4. Find build/test/lint commands from config files, scripts, Makefiles, or CI configs
-5. Read representative source files to understand code patterns
-6. If {{.Config.Options.InitializeAs}} exists, read and improve it
+1.  **Inventory**: Run `ls -R` (or equivalent) to map the full project structure.
+2.  **Configuration Analysis**: Identify project type and dependencies by reading files like `package.json`, `go.mod`, `Cargo.toml`, `pom.xml`, `requirements.txt`, `Dockerfile`, `docker-compose.yml`, etc.
+3.  **Existing Context**: Check for and read existing documentation or rule files (`.cursor/rules/*.md`, `.cursorrules`, `.github/copilot-instructions.md`, `claude.md`, `agents.md`, `README.md`, `CONTRIBUTING.md`).
+4.  **Command Extraction**: Locate build, test, lint, and run commands in `Makefile`, `Taskfile`, `package.json` scripts, CI/CD configurations (e.g., `.github/workflows`), or shell scripts.
+5.  **Pattern Recognition**: Read a diverse sample of source files to identify:
+    *   Architectural patterns (e.g., MVC, Hexagonal, Clean Architecture).
+    *   Coding style and conventions (naming, formatting, error handling).
+    *   Testing patterns (unit vs integration, libraries used).
 
-**Content to include**:
+**Content Requirements for {{.Config.Options.InitializeAs}}**:
 
-- Essential commands (build, test, run, deploy, etc.) - whatever is relevant for this project
-- Code organization and structure
-- Naming conventions and style patterns
-- Testing approach and patterns
-- Important gotchas or non-obvious patterns
-- Any project-specific context from existing rule files
+*   **Project Overview**: Brief summary of what the project does and its primary tech stack (languages, frameworks, key libraries).
+*   **Operational Commands**: Verified commands for:
+    *   **Setup/Install**: How to install dependencies.
+    *   **Development**: How to start the local dev server or watcher.
+    *   **Testing**: How to run the full suite and specific tests.
+    *   **Building**: How to build for production.
+    *   **Linting/Formatting**: How to enforce code style.
+*   **Architecture & Structure**:
+    *   Key directories and their specific responsibilities.
+    *   Core design patterns used throughout the codebase.
+    *   Data flow summary (if discernible).
+*   **Coding Standards**:
+    *   Naming conventions (files, variables, functions).
+    *   Preferred idioms and patterns.
+    *   Error handling approach.
+*   **Gotchas & Edge Cases**: Specific quirks, non-standard implementations, or critical configuration details observed.
 
-**Format**: Clear markdown sections. Use your judgment on structure based on what you find. Aim for completeness over brevity - include everything an agent would need to know.
+**Format**: Use clear Markdown with headers, code blocks for commands, and bullet points for readability. Structure it logically for quick lookup.
 
-**Critical**: Only document what you actually observe. Never invent commands, patterns, or conventions. If you can't find something, don't include it.
+**Critical Rules**:
+*   **Evidence-Based**: Only document what you verify exists. Do not hallucinate commands or patterns.
+*   **Specificity**: Prefer specific commands (e.g., `npm run test:unit`) over generic advice.
+*   **Completeness**: If a standard workflow (like testing) is missing, note that it was not found rather than inventing one.
